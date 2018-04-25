@@ -5,19 +5,19 @@ import com.pythonteam.models.Employee;
 
 import java.util.List;
 
-public class EmployeeHandler implements BaseHandler<Employee> {
+public class EmployeeHandler implements BaseHandler<Employee,Integer> {
     @Override
     public List<Employee> findAll() {
         return Database.getJdbi().withExtension(EmployeeDao.class, EmployeeDao::list);
     }
 
     @Override
-    public Employee findOne(int id) {
+    public Employee findOne(Integer id) {
         return Database.getJdbi().withExtension(EmployeeDao.class, dao -> dao.findOne(id));
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(Integer id) {
         return Database.getJdbi().withExtension(EmployeeDao.class,dao -> dao.delete(id));
     }
 
@@ -27,7 +27,8 @@ public class EmployeeHandler implements BaseHandler<Employee> {
     }
 
     @Override
-    public boolean create(Employee employee) {
-        return Database.getJdbi().withExtension(EmployeeDao.class, dao -> dao.create(employee.getName(), employee.getPaternalName(), employee.getMaternalName(), employee.getBirthday(), employee.getEmail(), employee.getUserId()));
+    public Employee create(Employee employee) {
+        employee.setId(Database.getJdbi().withExtension(EmployeeDao.class, dao -> dao.create(employee.getName(), employee.getPaternalName(), employee.getMaternalName(), employee.getBirthday(), employee.getEmail(), employee.getUserId())));
+        return employee;
     }
     }

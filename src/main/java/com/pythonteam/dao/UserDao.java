@@ -3,6 +3,7 @@ package com.pythonteam.dao;
 import com.pythonteam.models.User;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
+import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
@@ -19,7 +20,8 @@ public interface UserDao {
     User findOne(@Bind("id") int id);
 
     @SqlUpdate("INSERT INTO users(username, password) VALUES (:users,:password);")
-    boolean create(@Bind("users") String username, @Bind("password") String password);
+    @GetGeneratedKeys("id")
+    int create(@Bind("users") String username, @Bind("password") String password);
 
     @SqlUpdate("delete from users where id = :id")
     boolean delete(@Bind("id") int id);

@@ -20,28 +20,27 @@ public class TokensService implements ServiceInterface<User> {
         try {
             return  Response.ok(new TokenHandler().create(user), MediaType.APPLICATION_JSON).build();
         } catch (SQLException e) {
-            e.printStackTrace();
+            return Response.serverError().entity("Datos incorrectos").build();
         }
-        return Response.status(Response.Status.NOT_FOUND).build();
     }
 
     @Override
     public Response read(int id) {
-        return null;
+        return Response.serverError().entity("No implementado").build();
     }
 
     @Override
     public Response readAll() {
-        return null;
+        return Response.serverError().entity("No implementado").build();
     }
 
     @Override
     public Response update(User user) {
-        return null;
+        return Response.serverError().entity("No implementado").build();
     }
 
     @Override
     public Response delete(int id) {
-        return null;
+        return Response.serverError().entity("No implementado").build();
     }
 }

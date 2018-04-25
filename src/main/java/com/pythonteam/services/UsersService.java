@@ -20,8 +20,8 @@ public class UsersService implements ServiceInterface<User> {
     @TokenSecured
     @Override
     public Response create(User user) {
-        boolean response = new UserHandler().create(user);
-        if (response)
+        User response = new UserHandler().create(user);
+        if (response != null)
             return  Response.ok(true, MediaType.APPLICATION_JSON).build();
         else
             return Response.status(Response.Status.NOT_FOUND).build();

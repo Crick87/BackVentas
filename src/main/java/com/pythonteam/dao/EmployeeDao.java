@@ -3,6 +3,7 @@ package com.pythonteam.dao;
 import com.pythonteam.models.Employee;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
+import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
@@ -19,7 +20,8 @@ public interface EmployeeDao {
     Employee findOne(@Bind("id") int id);
 
     @SqlUpdate("INSERT INTO employees(name, paternalName, maternalName, birthday, email, userId) VALUES (:name,:paternalName,:maternalName,:birthday,:userId);")
-    boolean create(@Bind("name") String name, @Bind("paternalName") String paternalName, @Bind("maternalName") String maternalName, @Bind("birthday") Date birthday,@Bind("email") String email,@Bind("userId") int userId);
+    @GetGeneratedKeys("id")
+    int create(@Bind("name") String name, @Bind("paternalName") String paternalName, @Bind("maternalName") String maternalName, @Bind("birthday") Date birthday,@Bind("email") String email,@Bind("userId") int userId);
 
     @SqlUpdate("delete from employees where id = :id")
     boolean delete(@Bind("id") int id);

@@ -12,14 +12,14 @@ public class Database {
 
     static {
         try {
-            Class.forName("org.mariadb.jdbc.Driver");
+            Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         HikariConfig config = new HikariConfig();
-        config.setJdbcUrl("jdbc:mysql://localhost:3306/ventas");
-        config.setUsername("root");
-        config.setPassword("password");
+        config.setJdbcUrl("jdbc:postgresql://127.0.0.1/ventas");
+        config.setUsername("ventas");
+        config.setPassword("123");
         config.setMaximumPoolSize(2);
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");

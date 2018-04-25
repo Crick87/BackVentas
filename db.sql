@@ -1,6 +1,6 @@
 DROP TABLE if exists users;
 CREATE TABLE users (
-  id int PRIMARY KEY auto_increment not null,
+  id serial PRIMARY KEY not null,
   username VARCHAR(30) UNIQUE ,
   password VARCHAR(150)
 );
@@ -11,7 +11,7 @@ INSERT INTO users(username, password) VALUES ('mochilas','123');
 
 drop table if exists employees;
 create table employees(
-  id int PRIMARY KEY auto_increment not null,
+  id serial PRIMARY KEY not null,
   name VARCHAR(150) not null,
   paternalName VARCHAR(150) not null,
   maternalName VARCHAR(150) not null,
@@ -26,39 +26,39 @@ insert into employees(name,paternalName,maternalName,birthday,email, userId) VAL
 
 drop table if exists token;
 create TABLE token(
-  id int PRIMARY KEY AUTO_INCREMENT not null,
+  id serial primary key not null,
   token VARCHAR(200) not null
 );
 
 drop table if exists customers;
 create table customers (
-  id int primary key auto_increment not null,
+  id serial primary key not null,
   name varchar(150) not null,
   phone varchar(150) not null,
   email varchar(150) not null
 );
 
-insert into customers(name, phone, email) value ('Cristian', '123123', 'creshandkesh@gmail.com');
+insert into customers(name, phone, email) values ('Cristian', '123123', 'creshandkesh@gmail.com');
 
 drop table if exists products;
 create table products(
-  id int primary key auto_increment not null,
+  id serial primary key not null,
   name varchar(150) not null ,
-  price int not null
+  price numeric not null
 );
 
-insert into products(name, price) value ('Dona de chocolate',4);
-insert into products(name, price) value ('Dona de fresa',4);
-insert into products(name, price) value ('Dona de coco',5);
-insert into products(name, price) value ('Dona de nuez',5);
-insert into products(name, price) value ('Dona glaseada',6);
-insert into products(name, price) value ('Dona de crema',10);
-insert into products(name, price) value ('Donita',2);
-insert into products(name, price) value ('Donota',12);
+insert into products(name, price) values ('Dona de chocolate',4);
+insert into products(name, price) values ('Dona de fresa',4);
+insert into products(name, price) values ('Dona de coco',5);
+insert into products(name, price) values ('Dona de nuez',5);
+insert into products(name, price) values ('Dona glaseada',6);
+insert into products(name, price) values ('Dona de crema',10);
+insert into products(name, price) values ('Donita',2);
+insert into products(name, price) values ('Donota',12);
 
 drop table if exists orders;
 create table orders(
-  id int primary key auto_increment not null,
+  id serial primary key not null,
   status boolean default false
 );
 

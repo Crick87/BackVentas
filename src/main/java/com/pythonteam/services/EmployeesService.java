@@ -12,8 +12,8 @@ import java.sql.SQLException;
 public class EmployeesService implements ServiceInterface<Employee> {
     @Override
     public Response create(Employee employee) {
-        boolean response = new EmployeeHandler().create(employee);
-        if (response)
+        Employee response = new EmployeeHandler().create(employee);
+        if (response != null)
             return  Response.ok(true, MediaType.APPLICATION_JSON).build();
         else
             return Response.status(Response.Status.NOT_FOUND).build();

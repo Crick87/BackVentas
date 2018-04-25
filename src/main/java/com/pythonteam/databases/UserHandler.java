@@ -5,19 +5,19 @@ import com.pythonteam.models.User;
 
 import java.util.List;
 
-public class UserHandler implements BaseHandler<User> {
+public class UserHandler implements BaseHandler<User,Integer> {
     @Override
     public List<User> findAll() {
         return Database.getJdbi().withExtension(UserDao.class, UserDao::list);
     }
 
     @Override
-    public User findOne(int id) {
+    public User findOne(Integer id) {
         return Database.getJdbi().withExtension(UserDao.class, dao -> dao.findOne(id));
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(Integer id) {
         return Database.getJdbi().withExtension(UserDao.class, dao-> dao.delete(id));
     }
 
@@ -27,8 +27,9 @@ public class UserHandler implements BaseHandler<User> {
     }
 
     @Override
-    public boolean create(User user) {
-        return Database.getJdbi().withExtension(UserDao.class, dao -> dao.create(user.getUsername(),user.getPassword()));
+    public User create(User user) {
+        user.setId(Database.getJdbi().withExtension(UserDao.class, dao -> dao.create(user.getUsername(),user.getPassword())));
+        return user;
     }
 
     public User checkPass(User user) {
