@@ -15,14 +15,13 @@ create table employees(
   name VARCHAR(150) not null,
   paternalName VARCHAR(150) not null,
   maternalName VARCHAR(150) not null,
-  birthday DATE ,
   email VARCHAR(150) not null,
   userId int REFERENCES users(id)
 );
 
-insert into employees(name,paternalName,maternalName,birthday,email, userId) VALUES ('Mark Anthony','Arreguin','Gonzalez','2008-7-04','ceo@opal.com',1);
-insert into employees(name,paternalName,maternalName,birthday,email, userId) VALUES ('Richy','Gallegos','Gallegos','2008-7-04','dto@opal.com',2);
-insert into employees(name,paternalName,maternalName,birthday,email, userId) VALUES ('Cristian','Perez',':v','2008-7-04','mochilas@opal.com',3);
+insert into employees(name,paternalName,maternalName,email, userId) VALUES ('Mark Anthony','Arreguin','Gonzalez','ceo@opal.com',1);
+insert into employees(name,paternalName,maternalName,email, userId) VALUES ('Richy','Gallegos','Gallegos','dto@opal.com',2);
+insert into employees(name,paternalName,maternalName,email, userId) VALUES ('Cristian','Perez',':v','mochilas@opal.com',3);
 
 
 drop table if exists customers;

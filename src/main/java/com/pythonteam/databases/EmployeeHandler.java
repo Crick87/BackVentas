@@ -23,12 +23,12 @@ public class EmployeeHandler implements BaseHandler<Employee,Integer> {
 
     @Override
     public Employee update(Employee employee) {
-        return Database.getJdbi().withExtension(EmployeeDao.class, dao -> dao.update(employee.getId(),employee.getName(), employee.getPaternalName(), employee.getMaternalName(), employee.getBirthday(), employee.getEmail(), employee.getUserId()));
+        return Database.getJdbi().withExtension(EmployeeDao.class, dao -> dao.update(employee.getId(),employee.getName(), employee.getPaternalName(), employee.getMaternalName() , employee.getEmail(), employee.getUserId()));
     }
 
     @Override
     public Employee create(Employee employee) {
-        employee.setId(Database.getJdbi().withExtension(EmployeeDao.class, dao -> dao.create(employee.getName(), employee.getPaternalName(), employee.getMaternalName(), employee.getBirthday(), employee.getEmail(), employee.getUserId())));
+        employee.setId(Database.getJdbi().withExtension(EmployeeDao.class, dao -> dao.create(employee.getName(), employee.getPaternalName(), employee.getMaternalName(), employee.getEmail(), employee.getUserId())));
         return employee;
     }
     }

@@ -1,13 +1,10 @@
 package com.pythonteam.models;
 
-import java.sql.Date;
-
 public class Employee {
     private int id;
     private String name;
     private String paternalName;
     private String maternalName;
-    private Date birthday;
     private String email;
     private int userId;
 
@@ -44,14 +41,6 @@ public class Employee {
 
     public void setMaternalName(String maternalName) {
         this.maternalName = maternalName;
-    }
-
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
     }
 
     public String getEmail() {
