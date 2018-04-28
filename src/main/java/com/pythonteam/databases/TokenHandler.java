@@ -29,12 +29,9 @@ public class TokenHandler implements BaseHandler<User,String>{
                     .build(); //Reusable verifier instance
             DecodedJWT jwt = verifier.verify(id);
             final int userId = jwt.getClaim("userid").asInt();
-            System.out.println(userId);
             User user = new UserHandler().findOne(userId);
-            System.out.println(user.getUsername());
             return user ;
         } catch (Exception e) {
-            System.out.println("No valido");
             return null;
         }
     }

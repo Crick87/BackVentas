@@ -18,21 +18,41 @@ create table employees(
   email VARCHAR(150) not null,
   userId int REFERENCES users(id)
 );
-
 insert into employees(name,paternalName,maternalName,email, userId) VALUES ('Mark Anthony','Arreguin','Gonzalez','ceo@opal.com',1);
 insert into employees(name,paternalName,maternalName,email, userId) VALUES ('Richy','Gallegos','Gallegos','dto@opal.com',2);
 insert into employees(name,paternalName,maternalName,email, userId) VALUES ('Cristian','Perez',':v','mochilas@opal.com',3);
 
+-- Get: Employee Routes
+select id,idPath from employees join routes on employees.id = routes.idEmployee;
+
+-- Get employee routes
+select idPath, idCustomer, latlong from employees  e join routes join customers c on routes.idCustomer = c.id on e.id = routes.idEmployee;
+
+drop table if exists paths;
+create table routes(
+  idEmployee int not null references employees(id),
+  idPath int not null,
+  idCustomer int not null references customers(id),
+  primary key(idEmployee,idCustomer,idPath)
+);
+
+insert into routes(idEmployee, idPath, idCustomer) VALUES (1,1,1);
+insert into routes(idEmployee, idPath, idCustomer) VALUES (1,1,2);
+insert into routes(idEmployee, idPath, idCustomer) VALUES (1,2,3);
 
 drop table if exists customers;
 create table customers (
   id serial primary key not null,
   name varchar(150) not null,
   phone varchar(150) not null,
-  email varchar(150) not null
+  email varchar(150) not null,
+  latlong point
 );
 
-insert into customers(name, phone, email) values ('Cristian', '123123', 'creshandkesh@gmail.com');
+insert into customers(name, phone, email,latlong) values ('Cris', 'pj', 'creshandkesh@gmail.com', point(20.541397, -100.816643));
+insert into customers(name, phone, email,latlong) values ('Carmona con kk', '123123', 'carmonakk@gmail.com', point(20.540882, -100.815511));
+insert into customers(name, phone, email,latlong) values ('pakorizo', '123123', 'pako@gmail.com', point(20.524687, -100.796123));
+
 
 drop table if exists products;
 create table products(

@@ -35,8 +35,8 @@ public class CustomersService implements ServiceInterface<Customer> {
     }
 
     @Override
-    public Response update(Customer employee) {
-        return  Response.ok(new CustomerHandler().update(employee), MediaType.APPLICATION_JSON).build();
+    public Response update(Customer customer) {
+        return  Response.ok(new CustomerHandler().update(customer), MediaType.APPLICATION_JSON).build();
     }
 
     @Override

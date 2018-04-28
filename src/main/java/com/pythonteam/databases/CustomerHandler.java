@@ -23,13 +23,13 @@ public class CustomerHandler implements BaseHandler<Customer,Integer> {
     }
 
     @Override
-    public Customer update(Customer employee) {
-        return Database.getJdbi().withExtension(CustomerDao.class, dao -> dao.update(employee.getId(),employee.getName(), employee.getPhone(), employee.getEmail()));
+    public Customer update(Customer customer) {
+        return Database.getJdbi().withExtension(CustomerDao.class, dao -> dao.update(customer.getId(),customer.getName(), customer.getPhone(), customer.getEmail(),customer.getLatlong()));
     }
 
     @Override
-    public Customer create(Customer employee) {
-        employee.setId(Database.getJdbi().withExtension(CustomerDao.class, dao -> dao.create(employee.getName(), employee.getPhone(), employee.getEmail())));
-        return employee;
+    public Customer create(Customer customer) {
+        customer.setId(Database.getJdbi().withExtension(CustomerDao.class, dao -> dao.create(customer.getName(), customer.getPhone(), customer.getEmail(),customer.getLatlong())));
+        return customer;
     }
     }

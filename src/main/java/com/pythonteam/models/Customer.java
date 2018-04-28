@@ -1,11 +1,15 @@
 package com.pythonteam.models;
 
+import org.postgresql.geometric.PGpoint;
+
 public class Customer {
 
     private int id;
     private String name;
     private String phone;
     private String email;
+    private PGpoint latlong;
+
 
     public int getId() {
         return id;
@@ -37,5 +41,13 @@ public class Customer {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public PGpoint getLatlong() {
+        return latlong;
+    }
+
+    public void setLatlong(PGpoint latlong) {
+        this.latlong = latlong;
     }
 }
