@@ -2,7 +2,9 @@ package com.pythonteam.databases;
 
 import com.pythonteam.dao.EmployeeDao;
 import com.pythonteam.models.Employee;
+import com.pythonteam.models.Route;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeHandler implements BaseHandler<Employee,Integer> {
@@ -31,4 +33,8 @@ public class EmployeeHandler implements BaseHandler<Employee,Integer> {
         employee.setId(Database.getJdbi().withExtension(EmployeeDao.class, dao -> dao.create(employee.getName(), employee.getPaternalName(), employee.getMaternalName(), employee.getEmail(), employee.getUserId())));
         return employee;
     }
+
+    public ArrayList<Route> findRoute(int id) {
+        return Database.getJdbi().withExtension(EmployeeDao.class, dao -> dao.findRoutes(id));
     }
+}

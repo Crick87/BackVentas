@@ -26,7 +26,10 @@ insert into employees(name,paternalName,maternalName,email, userId) VALUES ('Cri
 select id,idPath from employees join routes on employees.id = routes.idEmployee;
 
 -- Get employee routes
-select idPath, idCustomer, latlong from employees  e join routes join customers c on routes.idCustomer = c.id on e.id = routes.idEmployee;
+select idPath, latlong
+from employees e join routes join customers c on routes.idCustomer = c.id on e.id = routes.idEmployee
+where idEmployee = 1;
+
 
 drop table if exists paths;
 create table routes(

@@ -1,6 +1,7 @@
 package com.pythonteam.dao;
 
 import com.pythonteam.models.Employee;
+import com.pythonteam.models.Route;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
@@ -18,6 +19,10 @@ public interface EmployeeDao {
     @SqlQuery("SELECT * FROM employees where :id = id")
     @RegisterBeanMapper(Employee.class)
     Employee findOne(@Bind("id") int id);
+
+    @SqlQuery("select idPath, latlong from employees e join routes join customers c on routes.idCustomer = c.id on e.id = routes.idEmployee where idEmployee = :id;")
+    @RegisterBeanMapper(Route.class)
+    ArrayList<Route>findRoutes(@Bind("id") int id);
 
     @SqlUpdate("INSERT INTO employees(name, paternalName, maternalName, birthday, email, userId) VALUES (:name,:paternalName,:maternalName,:birthday,:userId);")
     @GetGeneratedKeys("id")
