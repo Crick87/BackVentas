@@ -88,10 +88,16 @@ insert into productPrices(productId, date, price) values (5,now(),6);
 insert into productPrices(productId, date, price) values (6,now(),10);
 insert into productPrices(productId, date, price) values (7,now(),2);
 insert into productPrices(productId, date, price) values (8,now(),12);
+insert into productPrices(productId, date, price) values (8,now(),12.5);
 
--- consulta para obtener el precio de las ordenes
-select price, date from productPrices where productId = 1 and
-                                                      date between '23/04/2018' and '25/04/2018';
+-- Obtener el producto
+select id, name, description, image, price from products join productPrices on id=productId
+where date = (SELECT
+                  MAX(date)
+                from productPrices
+                where id = productId and date <= now());
+
+
 
 drop table if exists stock;
 create table stock(
@@ -115,6 +121,8 @@ create table orders(
   status boolean default false,
   orderDate date
 );
+
+
 
 drop table if exists customer_order;
 create table customer_order(

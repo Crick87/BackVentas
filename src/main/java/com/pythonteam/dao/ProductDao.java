@@ -11,20 +11,35 @@ import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import java.util.ArrayList;
 
 public interface ProductDao {
-    @SqlQuery("SELECT * FROM products")
+    @SqlQuery("select id, name, description, image, price from products join productPrices on id=productId\n" +
+            "where date = (SELECT\n" +
+            "                  MAX(date)\n" +
+            "                from productPrices\n" +
+            "                where id = productId and date <= now());")
     @RegisterBeanMapper(Product.class)
     ArrayList<Product> list();
 
-    @SqlQuery("SELECT * FROM products where :id = id")
+    @SqlQuery("select id, name, description, image, price from products join productPrices on id=productId\n" +
+            "where date = (SELECT\n" +
+            "                  MAX(date)\n" +
+            "                from productPrices\n" +
+            "                where id = productId and date <= now()); where :id = id")
     @RegisterBeanMapper(Product.class)
     Product findOne(@Bind("id") int id);
+
 
     @SqlUpdate("INSERT INTO products(name, description) VALUES (:name,:description);")
     @GetGeneratedKeys("id")
     int create(@Bind("name") String name, @Bind("description") String description);
 
+    @SqlUpdate("insert into productPrices(productId, date, price) values (:productID,now(),:prices);")
+    int createPrice(@Bind("productId") int productID, @Bind("price") double price);
+
     @SqlUpdate("delete from products where id = :id")
     boolean delete(@Bind("id") int id);
+
+    @SqlUpdate("delete from productPrices where productId = :id")
+    boolean deletePrice(@Bind("id") int id);
 
     @SqlQuery("update products set name = :name, description = :description where id = :id")
     @RegisterBeanMapper(Product.class)
