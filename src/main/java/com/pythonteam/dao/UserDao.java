@@ -27,6 +27,7 @@ public interface UserDao {
     boolean delete(@Bind("id") int id);
 
     @SqlQuery("update users set username = :username, password = :password where id = :id")
+    @GetGeneratedKeys
     @RegisterBeanMapper(User.class)
     User update(@Bind("id") int id, @Bind("username") String username, @Bind("password") String password);
 

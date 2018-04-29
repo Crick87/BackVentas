@@ -27,6 +27,7 @@ public interface CustomerDao {
     boolean delete(@Bind("id") int id);
 
     @SqlQuery("update customers set name = :name, phone = :phone, email = :email where id = :id")
+    @GetGeneratedKeys
     @RegisterBeanMapper(Customer.class)
     Customer update(@Bind("id") int id, @Bind("name") String name, @Bind("phone") String phone, @Bind("email") String email, @Bind("latlong")PGpoint latlong);
 
