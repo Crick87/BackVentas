@@ -19,16 +19,16 @@ public interface CustomerDao {
     @RegisterBeanMapper(Customer.class)
     Customer findOne(@Bind("id") int id);
 
-    @SqlUpdate("INSERT INTO customers(name, phone, email, latlong) VALUES (:name,:phone,:email,:latlong);")
+    @SqlUpdate("INSERT INTO customers(name, phone, email, latlong) VALUES (:name,:phone,:email,point(:x,:y) );")
     @GetGeneratedKeys("id")
-    int create(@Bind("name") String name, @Bind("phone") String phone, @Bind("email") String email, @Bind("latlong")PGpoint latlong);
+    int create(@Bind("name") String name, @Bind("phone") String phone, @Bind("email") String email, @Bind("x") double x, @Bind("y") double y);
 
     @SqlUpdate("delete from customers where id = :id")
     boolean delete(@Bind("id") int id);
 
-    @SqlUpdate("update customers set name = :name, phone = :phone, email = :email, latlong = :latlong where id = :id")
+    @SqlUpdate("update customers set name = :name, phone = :phone, email = :email, latlong = point(:x,:y) where id = :id")
     @GetGeneratedKeys
     @RegisterBeanMapper(Customer.class)
-    Customer update(@Bind("id") int id, @Bind("name") String name, @Bind("phone") String phone, @Bind("email") String email, @Bind("latlong")PGpoint latlong);
+    Customer update(@Bind("id") int id, @Bind("name") String name, @Bind("phone") String phone, @Bind("email") String email, @Bind("x") double x, @Bind("y") double y);
 
 }
