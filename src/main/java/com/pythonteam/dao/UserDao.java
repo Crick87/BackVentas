@@ -32,7 +32,7 @@ public interface UserDao {
     User update(@Bind("id") int id, @Bind("username") String username, @Bind("password") String password);
 
 
-    @SqlQuery("select * from users where username = :username and password = :password")
+    @SqlUpdate("select * from users where username = :username and password = :password")
     @RegisterBeanMapper(User.class)
     User check(@Bind("username") String username, @Bind("password") String password);
 

@@ -31,7 +31,7 @@ public interface EmployeeDao {
     @SqlUpdate("delete from employees where id = :id")
     boolean delete(@Bind("id") int id);
 
-    @SqlQuery("update employees set name = :name, paternalName = :paternalName, maternalName = :maternalName, birthday = :birthday, email = :email, userId = :userId where id = :id")
+    @SqlUpdate("update employees set name = :name, paternalName = :paternalName, maternalName = :maternalName, birthday = :birthday, email = :email, userId = :userId where id = :id")
     @GetGeneratedKeys
     @RegisterBeanMapper(Employee.class)
     Employee update(@Bind("id") int id, @Bind("name") String name, @Bind("paternalName") String paternalName, @Bind("maternalName") String maternalName, @Bind("email") String email,@Bind("userId") int userId);

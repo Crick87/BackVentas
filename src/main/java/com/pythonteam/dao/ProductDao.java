@@ -41,7 +41,7 @@ public interface ProductDao {
     @SqlUpdate("delete from productPrices where productId = :id")
     boolean deletePrice(@Bind("id") int id);
 
-    @SqlQuery("update products set name = :name, description = :description where id = :id")
+    @SqlUpdate("update products set name = :name, description = :description where id = :id")
     @GetGeneratedKeys
     @RegisterBeanMapper(Product.class)
     Product update(@Bind("id") int id, @Bind("name") String name, @Bind("description") String description);
