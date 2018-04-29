@@ -20,7 +20,7 @@ public interface EmployeeDao {
     @RegisterBeanMapper(Employee.class)
     Employee findOne(@Bind("id") int id);
 
-    @SqlQuery("select idPath, latlong, c.name as customerName from employees e join routes join customers c on routes.idCustomer = c.id on e.id = routes.idEmployee where idEmployee = :id;")
+    @SqlQuery("select idPath, latlong from employees e join routes join customers c on routes.idCustomer = c.id on e.id = routes.idEmployee where idEmployee = :id;")
     @RegisterBeanMapper(Route.class)
     ArrayList<Route>findRoutes(@Bind("id") int id);
 
@@ -32,6 +32,7 @@ public interface EmployeeDao {
     boolean delete(@Bind("id") int id);
 
     @SqlQuery("update employees set name = :name, paternalName = :paternalName, maternalName = :maternalName, birthday = :birthday, email = :email, userId = :userId where id = :id")
-    boolean update(@Bind("id") int id, @Bind("name") String name, @Bind("paternalName") String paternalName, @Bind("maternalName") String maternalName, @Bind("email") String email,@Bind("userId") int userId);
+    @RegisterBeanMapper(Employee.class)
+    Employee update(@Bind("id") int id, @Bind("name") String name, @Bind("paternalName") String paternalName, @Bind("maternalName") String maternalName, @Bind("email") String email,@Bind("userId") int userId);
 
 }

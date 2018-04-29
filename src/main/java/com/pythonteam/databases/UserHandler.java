@@ -22,7 +22,7 @@ public class UserHandler implements BaseHandler<User,Integer> {
     }
 
     @Override
-    public boolean update(User user) {
+    public User update(User user) {
         return Database.getJdbi().withExtension(UserDao.class, dao -> dao.update(user.getId(), user.getUsername(),user.getPassword()));
     }
 

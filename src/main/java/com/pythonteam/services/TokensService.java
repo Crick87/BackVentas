@@ -2,7 +2,6 @@ package com.pythonteam.services;
 
 import com.pythonteam.databases.TokenHandler;
 import com.pythonteam.models.User;
-import io.swagger.annotations.Api;
 
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;

@@ -24,7 +24,7 @@ public class EmployeeHandler implements BaseHandler<Employee,Integer> {
     }
 
     @Override
-    public boolean update(Employee employee) {
+    public Employee update(Employee employee) {
         return Database.getJdbi().withExtension(EmployeeDao.class, dao -> dao.update(employee.getId(),employee.getName(), employee.getPaternalName(), employee.getMaternalName() , employee.getEmail(), employee.getUserId()));
     }
 

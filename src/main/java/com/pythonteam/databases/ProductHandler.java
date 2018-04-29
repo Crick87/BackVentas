@@ -24,7 +24,7 @@ public class ProductHandler implements BaseHandler<Product,Integer> {
     }
 
     @Override
-    public boolean update(Product employee) {
+    public Product update(Product employee) {
         return Database.getJdbi().withExtension(ProductDao.class, dao -> dao.update(employee.getId(),employee.getName(), employee.getDescription()));
     }
 

@@ -23,7 +23,7 @@ public class CustomerHandler implements BaseHandler<Customer,Integer> {
     }
 
     @Override
-    public boolean update(Customer customer) {
+    public Customer update(Customer customer) {
         return Database.getJdbi().withExtension(CustomerDao.class, dao -> dao.update(customer.getId(),customer.getName(), customer.getPhone(), customer.getEmail(),customer.getLatlong()));
     }
 

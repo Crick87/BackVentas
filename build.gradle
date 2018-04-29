@@ -48,8 +48,5 @@ dependencies {
 
     compile 'com.google.firebase:firebase-admin:5.11.0'
 
-    // https://mvnrepository.com/artifact/io.swagger/swagger-jersey2-jaxrs
-    compile group: 'io.swagger', name: 'swagger-jersey2-jaxrs', version: '1.5.19'
-
 
 }

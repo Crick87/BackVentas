@@ -8,6 +8,6 @@ public interface BaseHandler<T,J> {
     List<T> findAll();
     T findOne(J id);
     boolean delete(J id);
-    boolean update(T t);
+    T update(T t);
     T create(T t) throws SQLException;
 }

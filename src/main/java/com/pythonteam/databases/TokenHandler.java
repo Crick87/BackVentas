@@ -41,8 +41,8 @@ public class TokenHandler implements BaseHandler<User,String>{
         return false;
     }
     @Override
-    public boolean update(User token) {
-        return false;
+    public User update(User token) {
+        return null;
     }
 
     @Override
