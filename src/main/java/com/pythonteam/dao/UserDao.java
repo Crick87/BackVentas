@@ -28,7 +28,7 @@ public interface UserDao {
 
     @SqlQuery("update users set username = :username, password = :password where id = :id")
     @RegisterBeanMapper(User.class)
-    User update(@Bind("id") int id, @Bind("username") String username, @Bind("password") String password);
+    boolean update(@Bind("id") int id, @Bind("username") String username, @Bind("password") String password);
 
 
     @SqlQuery("select * from users where username = :username and password = :password")
