@@ -26,13 +26,13 @@ public interface UserDao {
     @SqlUpdate("delete from users where id = :id")
     boolean delete(@Bind("id") int id);
 
-    @SqlQuery("update users set username = :username, password = :password where id = :id")
+    @SqlUpdate("update users set username = :username, password = :password where id = :id")
     @GetGeneratedKeys
     @RegisterBeanMapper(User.class)
     User update(@Bind("id") int id, @Bind("username") String username, @Bind("password") String password);
 
 
-    @SqlUpdate("select * from users where username = :username and password = :password")
+    @SqlQuery("select * from users where username = :username and password = :password")
     @RegisterBeanMapper(User.class)
     User check(@Bind("username") String username, @Bind("password") String password);
 
