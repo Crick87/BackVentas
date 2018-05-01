@@ -11,19 +11,17 @@ import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import java.util.ArrayList;
 
 public interface ProductDao {
-    @SqlQuery("select id, name, description, image, price from products join productPrices on id=productId\n" +
-            "where date = (SELECT\n" +
-            "                  MAX(date)\n" +
-            "                from productPrices\n" +
-            "                where id = productId and date <= now());")
+    @SqlQuery("select id, name, description, price from products join productPrices on id=productId" +
+            " where date = (SELECT MAX(date) from productPrices" +
+            " where id = productId and date <= now());")
     @RegisterBeanMapper(Product.class)
     ArrayList<Product> list();
 
-    @SqlQuery("select id, name, description, image, price from products join productPrices on id=productId\n" +
-            "where date = (SELECT\n" +
-            "                  MAX(date)\n" +
-            "                from productPrices\n" +
-            "                where id = productId and date <= now()); where :id = id")
+    @SqlQuery("select id, name, description, image, price from products join productPrices on id=productId" +
+            " where date = (SELECT" +
+            " MAX(date)" +
+            " from productPrices" +
+            " where id = productId and date <= now()) and id = :id")
     @RegisterBeanMapper(Product.class)
     Product findOne(@Bind("id") int id);
 
