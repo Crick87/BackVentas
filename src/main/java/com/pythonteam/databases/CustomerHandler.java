@@ -19,7 +19,11 @@ public class CustomerHandler implements BaseHandler<Customer,Integer> {
 
     @Override
     public boolean delete(Integer id) {
-        return Database.getJdbi().withExtension(CustomerDao.class,dao -> dao.delete(id));
+        return Database.getJdbi().withExtension(CustomerDao.class,dao -> {
+            dao.deleteRoute(id);
+            return dao.delete(id);
+        }
+        );
     }
 
     @Override

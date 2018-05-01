@@ -25,6 +25,9 @@ public interface CustomerDao {
     @SqlUpdate("delete from customers where id = :id")
     boolean delete(@Bind("id") int id);
 
+    @SqlUpdate("delete from routes where idCustomer = :id;")
+    boolean deleteRoute(@Bind("id") int id);
+
     @SqlUpdate("update customers set name = :name, phone = :phone, email = :email, latlong = point(:x,:y) where id = :id")
     @GetGeneratedKeys
     @RegisterBeanMapper(Customer.class)
