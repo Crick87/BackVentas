@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public interface ProductDao {
     @SqlQuery("select id, name, description, price from products join productPrices on id=productId" +
             " where date = (SELECT MAX(date) from productPrices" +
-            " where id = productId and date <= now());")
+            " where id = productId and date <= now())  order by id;")
     @RegisterBeanMapper(Product.class)
     ArrayList<Product> list();
 

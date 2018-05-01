@@ -6,12 +6,11 @@ import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
-import org.postgresql.geometric.PGpoint;
 
 import java.util.ArrayList;
 
 public interface CustomerDao {
-    @SqlQuery("select * from customers")
+    @SqlQuery("select * from customers  order by id")
     @RegisterBeanMapper(Customer.class)
     ArrayList<Customer> list();
 

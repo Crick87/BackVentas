@@ -100,8 +100,6 @@ where date = (SELECT
                 from productPrices
                 where id = productId and date <= now());
 
-
-
 drop table if exists stock;
 create table stock(
   productId int references products(id) primary key ,

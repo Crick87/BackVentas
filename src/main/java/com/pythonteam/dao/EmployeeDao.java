@@ -8,11 +8,10 @@ import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public interface EmployeeDao {
-    @SqlQuery("SELECT * FROM employees")
+    @SqlQuery("SELECT * FROM employees  order by id")
     @RegisterBeanMapper(Employee.class)
     ArrayList<Employee> list();
 

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public interface UserDao {
 
-    @SqlQuery("SELECT * FROM users")
+    @SqlQuery("SELECT * FROM users  order by id")
     @RegisterBeanMapper(User.class)
     ArrayList<User> list();
 
