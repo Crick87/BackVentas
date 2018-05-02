@@ -133,6 +133,8 @@ insert into customer_order(orderId, productId, quantity) VALUES (1,3,3);
 insert into customer_order(orderId, productId, quantity) VALUES (1,4,3);
 
 
+select * from orders join customer_order on orders.id = customer_order.orderId;
+
 drop table if exists customer_order;
 create table customer_order(
   orderId int references orders(id),
