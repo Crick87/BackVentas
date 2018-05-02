@@ -20,17 +20,24 @@ public class ProductHandler implements BaseHandler<Product,Integer> {
 
     @Override
     public boolean delete(Integer id) {
-        return Database.getJdbi().withExtension(ProductDao.class,dao -> dao.delete(id));
+        return Database.getJdbi().withExtension(ProductDao.class,dao -> {
+            dao.deletePrice(id);
+            return dao.delete(id);
+        });
     }
 
     @Override
-    public Product update(Product employee) {
-        return Database.getJdbi().withExtension(ProductDao.class, dao -> dao.update(employee.getId(),employee.getName(), employee.getDescription()));
+    public Product update(Product product) {
+        return Database.getJdbi().withExtension(ProductDao.class, dao -> {
+            dao.createPrice(product.getId(),product.getPrice());
+            return dao.update(product.getId(),product.getName(), product.getDescription());
+        });
     }
 
     @Override
-    public Product create(Product employee) {
-        employee.setId(Database.getJdbi().withExtension(ProductDao.class, dao -> dao.create(employee.getName(), employee.getDescription())));
-        return employee;
+    public Product create(Product product) {
+        product.setId(Database.getJdbi().withExtension(ProductDao.class, dao -> dao.create(product.getName(), product.getDescription())));
+        Database.getJdbi().withExtension(ProductDao.class, dao -> dao.createPrice(product.getId(), product.getPrice()));
+        return product;
     }
     }

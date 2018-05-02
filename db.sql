@@ -124,6 +124,14 @@ create table orders(
 );
 
 
+select id, name, description from products join stock on products.id = stock.productId where quantity > 1;
+
+insert into orders(customerId, orderDate) VALUES (1,now());
+insert into customer_order(orderId, productId, quantity) VALUES (1,1,3);
+insert into customer_order(orderId, productId, quantity) VALUES (1,2,3);
+insert into customer_order(orderId, productId, quantity) VALUES (1,3,3);
+insert into customer_order(orderId, productId, quantity) VALUES (1,4,3);
+
 
 drop table if exists customer_order;
 create table customer_order(
