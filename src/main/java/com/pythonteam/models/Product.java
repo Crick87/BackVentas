@@ -5,9 +5,18 @@ public class Product {
     private String name;
     private String description;
     private double price;
+    private byte[] image;
 
     public double getPrice() {
         return price;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public void setPrice(double price) {

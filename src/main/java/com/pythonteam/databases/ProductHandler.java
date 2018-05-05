@@ -5,9 +5,13 @@ import com.pythonteam.dao.ProductDao;
 import com.pythonteam.models.Employee;
 import com.pythonteam.models.Product;
 
+import java.nio.file.Path;
 import java.util.List;
 
 public class ProductHandler implements BaseHandler<Product,Integer> {
+    public static void loadImage(Path path) {
+    }
+
     @Override
     public List<Product> findAll() {
         return Database.getJdbi().withExtension(ProductDao.class, ProductDao::list);

@@ -11,7 +11,7 @@ import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import java.util.ArrayList;
 
 public interface ProductDao {
-    @SqlQuery("select id, name, description, price from products join productPrices on id=productId" +
+    @SqlQuery("select id, name, description, price, image from products join productPrices on id=productId" +
             " where date = (SELECT MAX(date) from productPrices" +
             " where id = productId and date <= now())  order by id;")
     @RegisterBeanMapper(Product.class)
@@ -30,7 +30,11 @@ public interface ProductDao {
     @GetGeneratedKeys("id")
     int create(@Bind("name") String name, @Bind("description") String description);
 
-    @SqlUpdate("insert into productPrices(productId, date, price) values (:productID,now(),:prices);")
+    @SqlUpdate("INSERT INTO products(image) VALUES (:image);")
+    int createImage(@Bind("image") String image);
+
+
+    @SqlUpdate("insert into productPrices(productId, date, price) values (:productId,now(),:price);")
     int createPrice(@Bind("productId") int productID, @Bind("price") double price);
 
     @SqlUpdate("delete from products where id = :id")

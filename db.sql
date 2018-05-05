@@ -143,3 +143,10 @@ create table customer_order(
   primary key (orderId,productId)
 );
 
+create table tokens(
+  int serial primary key not null,
+  token varchar(100) not null
+);
+
+select * from products;
+
