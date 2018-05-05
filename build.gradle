@@ -9,7 +9,6 @@ sourceCompatibility = 1.8
 gretty {
     servletContainer = 'tomcat9'
     host = '0.0.0.0'
-    httpsEnabled = true
 }
 
 repositories {

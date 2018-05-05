@@ -62,8 +62,11 @@ create table products(
   id serial primary key not null,
   name varchar(150) not null ,
   description varchar(150) not null,
-  image bytea
+  image varchar(100)
 );
+
+update products set image = null;
+alter table products alter column image type varchar(100);
 
 insert into products(name, description) values ('Dona de chocolate','La dona llena de negro chocolate');
 insert into products(name, description) values ('Dona de fresa','Dona llena de fresa');

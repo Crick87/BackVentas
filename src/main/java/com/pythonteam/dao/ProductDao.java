@@ -30,8 +30,8 @@ public interface ProductDao {
     @GetGeneratedKeys("id")
     int create(@Bind("name") String name, @Bind("description") String description);
 
-    @SqlUpdate("INSERT INTO products(image) VALUES (:image);")
-    int createImage(@Bind("image") String image);
+    @SqlUpdate("update products set image = :image where id = :id;")
+    int createImage(@Bind("image") String image, @Bind("id") int id);
 
 
     @SqlUpdate("insert into productPrices(productId, date, price) values (:productId,now(),:price);")

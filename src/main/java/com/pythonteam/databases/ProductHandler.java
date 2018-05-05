@@ -9,7 +9,8 @@ import java.nio.file.Path;
 import java.util.List;
 
 public class ProductHandler implements BaseHandler<Product,Integer> {
-    public static void loadImage(Path path) {
+    public static void loadImage(String path, int id) {
+        Database.getJdbi().withExtension(ProductDao.class, dao -> dao.createImage(path,id));
     }
 
     @Override
