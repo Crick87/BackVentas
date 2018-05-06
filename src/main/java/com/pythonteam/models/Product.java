@@ -1,9 +1,16 @@
 package com.pythonteam.models;
 
+import org.jdbi.v3.core.mapper.reflect.ColumnName;
+
 public class Product {
+    @ColumnName("id")
     private int id;
+
+    @ColumnName("name")
     private String name;
+    @ColumnName("description")
     private String description;
+    @ColumnName("price")
     private double price;
     private byte[] image;
 

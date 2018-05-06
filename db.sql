@@ -62,7 +62,8 @@ create table products(
   id serial primary key not null,
   name varchar(150) not null ,
   description varchar(150) not null,
-  image varchar(100)
+  image varchar(100),
+  stock int not null
 );
 
 update products set image = null;
@@ -80,7 +81,7 @@ insert into products(name, description) values ('Donota','Una donota para los qu
 drop table if exists productPrices;
 create table productPrices(
   productId int references products(id),
-  date date,
+  date timestap,
   price numeric
 );
 
@@ -103,21 +104,6 @@ where date = (SELECT
                 from productPrices
                 where id = productId and date <= now());
 
-drop table if exists stock;
-create table stock(
-  productId int references products(id) primary key ,
-  quantity int
-);
-
-insert into stock(productId, quantity) values (1,10);
-insert into stock(productId, quantity) values (2,10);
-insert into stock(productId, quantity) values (3,10);
-insert into stock(productId, quantity) values (4,10);
-insert into stock(productId, quantity) values (5,10);
-insert into stock(productId, quantity) values (6,10);
-insert into stock(productId, quantity) values (7,10);
-insert into stock(productId, quantity) values (8,10);
-
 drop table if exists orders;
 create table orders(
   id serial primary key not null,
@@ -126,8 +112,7 @@ create table orders(
   orderDate date
 );
 
-
-select id, name, description from products join stock on products.id = stock.productId where quantity > 1;
+select id, name, description from products  where stock > 1;
 
 insert into orders(customerId, orderDate) VALUES (1,now());
 insert into customer_order(orderId, productId, quantity) VALUES (1,1,3);
@@ -136,7 +121,24 @@ insert into customer_order(orderId, productId, quantity) VALUES (1,3,3);
 insert into customer_order(orderId, productId, quantity) VALUES (1,4,3);
 
 
-select * from orders join customer_order on orders.id = customer_order.orderId;
+select orderid, customerId, status, orderdate, customer_order.productId, quantity, p.name, p.description, price, price*quantity as total
+from orders o
+  join customer_order on o.id = customer_order.orderId
+  join products p on customer_order.productId = p.id
+  join productPrices on p.id=productPrices.productId
+where date = (SELECT
+                MAX(date)
+              from productPrices
+              where p.id = productPrices.productId and date <= now());
+
+select orderid o_orderid, customerId o_customerid, status o_status, orderdate o_orderdate, p.id p_id, p.name p_name, p.description p_description, price p_price from orders o
+                   join customer_order on o.id = customer_order.orderId
+                   join products p on customer_order.productId = p.id
+                   join productPrices on p.id=productPrices.productId
+                   where date = (SELECT
+                   MAX(date)
+                   from productPrices
+                   where p.id = productPrices.productId and date <= now());
 
 drop table if exists customer_order;
 create table customer_order(
@@ -151,5 +153,5 @@ create table tokens(
   token varchar(100) not null
 );
 
-select * from products;
+ALTER TABLE productprices ALTER COLUMN date TYPE timestamp USING date::timestamp;
 

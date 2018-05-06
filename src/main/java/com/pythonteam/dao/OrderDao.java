@@ -3,6 +3,7 @@ package com.pythonteam.dao;
 import com.pythonteam.models.Order;
 import com.pythonteam.models.Product;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
+import org.jdbi.v3.sqlobject.config.RegisterJoinRowMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
@@ -11,14 +12,6 @@ import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import java.util.ArrayList;
 
 public interface OrderDao {
-    @SqlQuery("select * from orders order by id;")
-    @RegisterBeanMapper(Order.class)
-    ArrayList<Order> list();
-
-    @SqlQuery("select * from orders where id = :id order by id;")
-    @RegisterBeanMapper(Order.class)
-    Order findOne(@Bind("id") int id);
-
 
     @SqlUpdate("INSERT INTO orders(customerId, orderDate) VALUES (:customerId,now());")
     @GetGeneratedKeys("id")

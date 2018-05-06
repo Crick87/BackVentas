@@ -1,19 +1,39 @@
 package com.pythonteam.models;
 
+import org.jdbi.v3.core.mapper.reflect.ColumnName;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Order {
-    private int id;
+    @ColumnName("orderid")
+    private int orderid;
+
+    @ColumnName("customerid")
     private int customerId;
+
+    @ColumnName("status")
     private boolean status;
-    private LocalDate orderDate;
+
+    @ColumnName("orderdate")
+    private LocalDate orderdate;
+    private List<Product> productList = new ArrayList<>();
+
+    public List<Product> getProductList() {
+        return productList;
+    }
+
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
+    }
 
     public int getId() {
-        return id;
+        return orderid;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.orderid = id;
     }
 
     public int getCustomerId() {
@@ -33,10 +53,15 @@ public class Order {
     }
 
     public LocalDate getOrderDate() {
-        return orderDate;
+        return orderdate;
     }
 
     public void setOrderDate(LocalDate orderDate) {
-        this.orderDate = orderDate;
+        this.orderdate = orderDate;
+    }
+
+    public void addProduct(Product product)
+    {
+        productList.add(product);
     }
 }
