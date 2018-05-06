@@ -26,11 +26,18 @@ public interface OrderDao {
     @SqlUpdate("delete from customer_order where orderId = :id")
     boolean deleteOrder(@Bind("id") int id);
 
+    @SqlUpdate("delete from customer_order where productId = :id")
+    boolean deleteProduct(@Bind("id") int id);
 
-    // TODO
-    @SqlUpdate("update products set name = :name, description = :description where id = :id")
+    @SqlUpdate("update orders set status = :status where id = :id")
     @GetGeneratedKeys
     @RegisterBeanMapper(Order.class)
-    Order update(@Bind("id") int id, @Bind("name") String name, @Bind("description") String description);
+    Order updateStatus(@Bind("id") int id, @Bind("status") boolean status);
+
+    @SqlUpdate("update customer_order set quantity = :quantity where productId = :id and orderId = :orderId")
+    @GetGeneratedKeys
+    @RegisterBeanMapper(Order.class)
+    Order updateProduct(@Bind("id") int id, @Bind("quntity") int quantity, @Bind("orderId") int orderId);
+
 
 }

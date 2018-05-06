@@ -12,8 +12,8 @@ import javax.ws.rs.core.Response;
 @Path("/customers")
 public class CustomersService implements ServiceInterface<Customer> {
     @Override
-    public Response create(Customer employee) {
-        Customer response = new CustomerHandler().create(employee);
+    public Response create(Customer customer) {
+        Customer response = new CustomerHandler().create(customer);
         if (response != null)
             return  Response.ok(true, MediaType.APPLICATION_JSON).build();
         else
@@ -22,11 +22,11 @@ public class CustomersService implements ServiceInterface<Customer> {
 
     @Override
     public Response read(int id) {
-        Customer employee = new CustomerHandler().findOne(id);
-        if (employee == null)
+        Customer customer = new CustomerHandler().findOne(id);
+        if (customer == null)
             return Response.status(Response.Status.NOT_FOUND).build();
         else
-            return Response.ok(employee, MediaType.APPLICATION_JSON).build();
+            return Response.ok(customer, MediaType.APPLICATION_JSON).build();
     }
 
     @Override

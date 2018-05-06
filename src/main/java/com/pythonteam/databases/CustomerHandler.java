@@ -34,6 +34,7 @@ public class CustomerHandler implements BaseHandler<Customer,Integer> {
     @Override
     public Customer create(Customer customer) {
         customer.setId(Database.getJdbi().withExtension(CustomerDao.class, dao -> dao.create(customer.getName(), customer.getPhone(), customer.getEmail(),customer.getLatlong().x,customer.getLatlong().y)));
+        //Database.getJdbi().withExtension(CustomerDao.class, dao -> dao.createRoute(1,customer.getId(),));
         return customer;
     }
     }

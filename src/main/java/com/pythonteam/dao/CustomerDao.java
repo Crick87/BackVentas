@@ -22,6 +22,9 @@ public interface CustomerDao {
     @GetGeneratedKeys("id")
     int create(@Bind("name") String name, @Bind("phone") String phone, @Bind("email") String email, @Bind("x") double x, @Bind("y") double y);
 
+    @SqlUpdate("insert into routes(idEmployee, idPath, idCustomer) VALUES (:idEmployee,:idPath,:idCustomer);")
+    int createRoute(@Bind("idEmployee") int idEmployee, @Bind("idPath") int idPath, @Bind("idCustomer") int idCustomer);
+
     @SqlUpdate("delete from customers where id = :id")
     boolean delete(@Bind("id") int id);
 
