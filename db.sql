@@ -138,7 +138,7 @@ select orderid o_orderid, customerId o_customerid, status o_status, orderdate o_
                    where date = (SELECT
                    MAX(date)
                    from productPrices
-                   where p.id = productPrices.productId and date <= now());
+                   where p.id = productPrices.productId and date <= now()) and orderid = 1;
 
 drop table if exists customer_order;
 create table customer_order(

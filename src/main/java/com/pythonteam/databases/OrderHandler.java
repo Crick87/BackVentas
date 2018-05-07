@@ -23,7 +23,7 @@ public class OrderHandler implements BaseHandler<Order,Integer> {
             "                   from productPrices" +
             "                   where p.id = productPrices.productId and date <= now())";
 
-    String selectOne = selectAll + " where orderid = :id";
+    String selectOne = selectAll + " and orderid = :id";
 
     @Override
     public List<Order> findAll() {
