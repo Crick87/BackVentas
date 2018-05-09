@@ -2,6 +2,7 @@ package com.pythonteam.services;
 
 
 import com.pythonteam.databases.FireHandler;
+import com.pythonteam.models.Token;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -14,9 +15,10 @@ public class FireService {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response test(String token)
+    public Response test(Token token)
     {
-        if (token.equals(""))
+        System.out.println("---------------------"+token);
+        if (token.getToken().equals(""))
         {
             return Response.serverError().entity("No hay token").build();
         }

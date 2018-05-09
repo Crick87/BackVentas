@@ -50,7 +50,7 @@ public class OrderHandler implements BaseHandler<Order,Integer> {
                         .registerRowMapper(BeanMapper.factory(Order.class, "o"))
                         .registerRowMapper(BeanMapper.factory(Product.class, "p"))
                         .<Integer, Order>reduceRows(((map, rowView) -> {
-                            Order order  = map.computeIfAbsent(
+                            Order order = map.computeIfAbsent(
                                     rowView.getColumn("o_orderid", Integer.class),
                                     id -> rowView.getRow(Order.class));
 
