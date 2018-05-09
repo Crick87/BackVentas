@@ -10,15 +10,15 @@ import java.util.ArrayList;
 
 public interface TokenDao {
 
-    @SqlQuery("SELECT * FROM token")
+    @SqlQuery("SELECT * FROM tokens")
     @RegisterBeanMapper(Token.class)
     ArrayList<Token> list();
 
-    @SqlQuery("select * from token where token = :token")
+    @SqlQuery("select * from tokens where token = :token")
     @RegisterBeanMapper(Token.class)
     Token findOne(@Bind("token") String token);
 
-    @SqlUpdate("INSERT INTO token(token) VALUES (:token);")
+    @SqlUpdate("INSERT INTO tokens(token) VALUES (:token);")
     boolean create(@Bind("token") String token);
 
 
