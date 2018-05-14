@@ -2,10 +2,11 @@ DROP TABLE if exists users;
 CREATE TABLE users (
   id serial PRIMARY KEY not null,
   username VARCHAR(30) UNIQUE ,
-  password VARCHAR(150)
+  password VARCHAR(150),
+  admin boolean default false
 );
 
-INSERT INTO users(username, password) VALUES ('ceo','123');
+INSERT INTO users(username, password,admin) VALUES ('ceo','123',true);
 INSERT INTO users(username, password) VALUES ('dto','123');
 INSERT INTO users(username, password) VALUES ('mochilas','123');
 
@@ -34,14 +35,14 @@ where idEmployee = 1;
 drop table if exists paths;
 create table routes(
   idEmployee int not null references employees(id),
-  idPath int not null,
+  idRoute int not null,
   idCustomer int not null references customers(id),
-  primary key(idEmployee,idCustomer,idPath)
+  primary key(idEmployee,idCustomer,idRoute)
 );
 
-insert into routes(idEmployee, idPath, idCustomer) VALUES (1,1,1);
-insert into routes(idEmployee, idPath, idCustomer) VALUES (1,1,2);
-insert into routes(idEmployee, idPath, idCustomer) VALUES (1,2,3);
+insert into routes(idEmployee, idRoute, idCustomer) VALUES (1,1,1);
+insert into routes(idEmployee, idRoute, idCustomer) VALUES (1,1,2);
+insert into routes(idEmployee, idRoute, idCustomer) VALUES (1,2,3);
 
 drop table if exists customers;
 create table customers (
@@ -69,19 +70,19 @@ create table products(
 update products set image = null;
 alter table products alter column image type varchar(100);
 
-insert into products(name, description) values ('Dona de chocolate','La dona llena de negro chocolate');
-insert into products(name, description) values ('Dona de fresa','Dona llena de fresa');
-insert into products(name, description) values ('Dona de coco','Dona con glaseado y pedazos de coco');
-insert into products(name, description) values ('Dona de nuez','Dona con glaseado de nuez');
-insert into products(name, description) values ('Dona glaseada','Una dona bien glaseada');
-insert into products(name, description) values ('Dona de crema','Dona con mucha crema');
-insert into products(name, description) values ('Donita','mini donita');
-insert into products(name, description) values ('Donota','Una donota para los que tienen hambre');
+insert into products(name, description, stock) values ('Dona de chocolate','La dona llena de negro chocolate',10);
+insert into products(name, description, stock) values ('Dona de fresa','Dona llena de fresa',10);
+insert into products(name, description, stock) values ('Dona de coco','Dona con glaseado y pedazos de coco',10);
+insert into products(name, description, stock) values ('Dona de nuez','Dona con glaseado de nuez',10);
+insert into products(name, description, stock) values ('Dona glaseada','Una dona bien glaseada',10);
+insert into products(name, description, stock) values ('Dona de crema','Dona con mucha crema',10);
+insert into products(name, description, stock) values ('Donita','mini donita',10);
+insert into products(name, description, stock) values ('Donota','Una donota para los que tienen hambre',10);
 
 drop table if exists productPrices;
 create table productPrices(
   productId int references products(id),
-  date timestap,
+  date timestamp,
   price numeric
 );
 
@@ -98,11 +99,12 @@ insert into productPrices(productId, date, price) values (8,now(),12);
 insert into productPrices(productId, date, price) values (8,now(),12.5);
 
 -- Obtener el producto
-select id, name, description, image, price from products join productPrices on id=productId
+select id, name, description, price from products join productPrices on id=productId
 where date = (SELECT
                   MAX(date)
                 from productPrices
-                where id = productId and date <= now());
+                where id = productId and date <= now()) order by id;
+
 
 drop table if exists orders;
 create table orders(
@@ -149,7 +151,7 @@ create table customer_order(
 );
 
 create table tokens(
-  int serial primary key not null,
+  id serial primary key not null,
   token varchar(100) not null
 );
 

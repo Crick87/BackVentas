@@ -6,6 +6,15 @@ public class User {
     private String username;
     private String password;
     private String token;
+    private boolean admin;
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
 
     public User(){}
 

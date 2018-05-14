@@ -1,6 +1,5 @@
 package com.pythonteam.dao;
 
-import com.pythonteam.models.Employee;
 import com.pythonteam.models.Product;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
@@ -11,13 +10,13 @@ import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import java.util.ArrayList;
 
 public interface ProductDao {
-    @SqlQuery("select id, name, description, price, image from products join productPrices on id=productId" +
+    @SqlQuery("select id, name, description, price from products join productPrices on id=productId" +
             " where date = (SELECT MAX(date) from productPrices" +
-            " where id = productId and date <= now())  order by id;")
+            " where id = productId and date <= now()) order by id;")
     @RegisterBeanMapper(Product.class)
     ArrayList<Product> list();
 
-    @SqlQuery("select id, name, description, image, price from products join productPrices on id=productId" +
+    @SqlQuery("select id, name, description, price from products join productPrices on id=productId" +
             " where date = (SELECT" +
             " MAX(date)" +
             " from productPrices" +
