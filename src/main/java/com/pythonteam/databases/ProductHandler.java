@@ -34,14 +34,16 @@ public class ProductHandler implements BaseHandler<Product,Integer> {
     @Override
     public Product update(Product product) {
         return Database.getJdbi().withExtension(ProductDao.class, dao -> {
-            dao.createPrice(product.getId(),product.getPrice());
-            return dao.update(product.getId(),product.getName(), product.getDescription());
+            Product p = dao.findOne(product.getId());
+            if (p.getPrice() != product.getPrice())
+                dao.createPrice(product.getId(),product.getPrice());
+            return dao.update(product.getId(),product.getName(), product.getDescription(), product.getStock());
         });
     }
 
     @Override
     public Product create(Product product) {
-        product.setId(Database.getJdbi().withExtension(ProductDao.class, dao -> dao.create(product.getName(), product.getDescription())));
+        product.setId(Database.getJdbi().withExtension(ProductDao.class, dao -> dao.create(product.getName(), product.getDescription(),product.getStock())));
         Database.getJdbi().withExtension(ProductDao.class, dao -> dao.createPrice(product.getId(), product.getPrice()));
         return product;
     }

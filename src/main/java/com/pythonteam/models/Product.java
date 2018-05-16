@@ -12,6 +12,18 @@ public class Product {
     private String description;
     @ColumnName("price")
     private double price;
+
+    @ColumnName("stock")
+    private int stock;
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
     private byte[] image;
 
     public double getPrice() {
