@@ -10,7 +10,7 @@
 
         <init-param>
             <param-name>jersey.config.server.provider.packages</param-name>
-            <param-value>com.pythonteam.services</param-value>
+            <param-value>com.pythonteam.services, com.pythonteam.filters</param-value>
         </init-param>
         <init-param>
             <param-name>jersey.config.server.provider.classnames</param-name>

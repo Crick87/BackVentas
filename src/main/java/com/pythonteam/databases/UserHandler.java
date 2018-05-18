@@ -1,8 +1,11 @@
 package com.pythonteam.databases;
 
 import com.pythonteam.dao.UserDao;
+import com.pythonteam.models.Route;
 import com.pythonteam.models.User;
+import org.mindrot.jbcrypt.BCrypt;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserHandler implements BaseHandler<User,Integer> {
@@ -23,16 +26,24 @@ public class UserHandler implements BaseHandler<User,Integer> {
 
     @Override
     public User update(User user) {
-        return Database.getJdbi().withExtension(UserDao.class, dao -> dao.update(user.getId(), user.getUsername(),user.getPassword()));
+        return Database.getJdbi().withExtension(UserDao.class, dao -> dao.update(user.getId(), user.getUsername(),user.getPassword(),user.getName(),user.getPaternalName(),user.getMaternalName(),user.getEmail()));
     }
 
     @Override
     public User create(User user) {
-        user.setId(Database.getJdbi().withExtension(UserDao.class, dao -> dao.create(user.getUsername(),user.getPassword())));
+        user.setId(Database.getJdbi().withExtension(UserDao.class, dao -> dao.create(user.getUsername(),BCrypt.hashpw(user.getPassword(),BCrypt.gensalt(12)),user.getName(),user.getPaternalName(),user.getMaternalName(),user.getEmail())));
         return user;
     }
 
+    public ArrayList<Route> findRoute(int id) {
+        return Database.getJdbi().withExtension(UserDao.class, dao -> dao.findRoutes(id));
+    }
+
     public User checkPass(User user) {
-        return Database.getJdbi().withExtension(UserDao.class, dao -> dao.check(user.getUsername(), user.getPassword()));
+        User u = Database.getJdbi().withExtension(UserDao.class, dao -> dao.check(user.getUsername()));
+        if (BCrypt.checkpw(user.getPassword(), u.getPassword()))
+            return u;
+        else
+            return null;
     }
 }

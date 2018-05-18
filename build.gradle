@@ -6,8 +6,9 @@ apply plugin: 'war'
 apply from: 'https://raw.github.com/gretty-gradle-plugin/gretty/master/pluginScripts/gretty.plugin'
 
 gretty {
-    servletContainer = 'tomcat9'
+    servletContainer = 'tomcat8'
     host = '0.0.0.0'
+    httpsEnabled = true
 }
 
 repositories {
@@ -15,6 +16,9 @@ repositories {
 }
 
 dependencies {
+
+    // bcrypt
+    compile group: 'org.mindrot', name: 'jbcrypt', version: '0.4'
 
     //javax
     compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'

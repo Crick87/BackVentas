@@ -1,9 +1,7 @@
 package com.pythonteam.services;
 
 import com.pythonteam.databases.CustomerHandler;
-import com.pythonteam.databases.EmployeeHandler;
 import com.pythonteam.models.Customer;
-import com.pythonteam.models.Employee;
 
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;

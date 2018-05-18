@@ -3,38 +3,30 @@ CREATE TABLE users (
   id serial PRIMARY KEY not null,
   username VARCHAR(30) UNIQUE ,
   password VARCHAR(150),
-  admin boolean default false
-);
-
-INSERT INTO users(username, password,admin) VALUES ('ceo','123',true);
-INSERT INTO users(username, password) VALUES ('dto','123');
-INSERT INTO users(username, password) VALUES ('mochilas','123');
-
-drop table if exists employees;
-create table employees(
-  id serial PRIMARY KEY not null,
+  admin boolean default false,
   name VARCHAR(150) not null,
   paternalName VARCHAR(150) not null,
   maternalName VARCHAR(150) not null,
-  email VARCHAR(150) not null,
-  userId int REFERENCES users(id)
+  email VARCHAR(150) not null
 );
-insert into employees(name,paternalName,maternalName,email, userId) VALUES ('Mark Anthony','Arreguin','Gonzalez','ceo@opal.com',1);
-insert into employees(name,paternalName,maternalName,email, userId) VALUES ('Richy','Gallegos','Gallegos','dto@opal.com',2);
-insert into employees(name,paternalName,maternalName,email, userId) VALUES ('Cristian','Perez',':v','mochilas@opal.com',3);
+
+INSERT INTO users(username, password,admin,name,paternalName,maternalName,email) VALUES ('ceo','123',true,'Mark Anthony','Arreguin','Gonzalez','ceo@opal.com');
+INSERT INTO users(username, password,name,paternalName,maternalName,email) VALUES ('dto','123','Richy','Gallegos','Gallegos','dto@opal.com');
+INSERT INTO users(username, password,name,paternalName,maternalName,email) VALUES ('mochilas','123','Cristian','Perez',':v','mochilas@opal.com');
 
 -- Get: Employee Routes
-select id,idPath from employees join routes on employees.id = routes.idEmployee;
+select id,idRoute from users join routes on users.id = routes.idEmployee;
 
 -- Get employee routes
-select idPath, latlong
-from employees e join routes join customers c on routes.idCustomer = c.id on e.id = routes.idEmployee
+select idRoute, latlong from users u
+  join routes on u.id = routes.idEmployee
+  join customers c on routes.idCustomer = c.id
 where idEmployee = 1;
 
 
-drop table if exists paths;
+drop table if exists routes;
 create table routes(
-  idEmployee int not null references employees(id),
+  idEmployee int not null references users(id),
   idRoute int not null,
   idCustomer int not null references customers(id),
   primary key(idEmployee,idCustomer,idRoute)

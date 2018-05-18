@@ -6,7 +6,44 @@ public class User {
     private String username;
     private String password;
     private String token;
+    private String name;
+    private String paternalName;
+    private String maternalName;
+    private String email;
     private boolean admin;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPaternalName() {
+        return paternalName;
+    }
+
+    public void setPaternalName(String paternalName) {
+        this.paternalName = paternalName;
+    }
+
+    public String getMaternalName() {
+        return maternalName;
+    }
+
+    public void setMaternalName(String maternalName) {
+        this.maternalName = maternalName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
 
     public boolean isAdmin() {
         return admin;
