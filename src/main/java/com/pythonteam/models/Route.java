@@ -3,15 +3,15 @@ package com.pythonteam.models;
 import org.postgresql.geometric.PGpoint;
 
 public class Route {
-    private int idPath;
+    private int idRoute;
     private PGpoint latLong;
 
-    public int getIdPath() {
-        return idPath;
+    public int getIdRoute() {
+        return idRoute;
     }
 
-    public void setIdPath(int idPath) {
-        this.idPath = idPath;
+    public void setIdRoute(int idRoute) {
+        this.idRoute = idRoute;
     }
 
     public PGpoint getLatLong() {

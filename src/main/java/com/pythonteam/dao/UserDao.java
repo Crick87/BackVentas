@@ -37,7 +37,7 @@ public interface UserDao {
     @RegisterBeanMapper(User.class)
     User check(@Bind("username") String username);
 
-    @SqlQuery("select idPath, latlong from users e join routes join customers c on routes.idCustomer = c.id on e.id = routes.idEmployee where idEmployee = :id;")
+    @SqlQuery("select idRoute, latlong from users e join routes join customers c on routes.idCustomer = c.id on e.id = routes.idEmployee where idEmployee = :id order by IdRoute;")
     @RegisterBeanMapper(Route.class)
     ArrayList<Route>findRoutes(@Bind("id") int id);
 
