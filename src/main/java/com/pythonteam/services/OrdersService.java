@@ -3,6 +3,7 @@ package com.pythonteam.services;
 import com.pythonteam.databases.OrderHandler;
 import com.pythonteam.databases.ProductHandler;
 import com.pythonteam.models.Order;
+import com.pythonteam.models.OrderGet;
 import com.pythonteam.models.Product;
 
 import javax.ws.rs.Path;
@@ -10,10 +11,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path("/orders")
-public class OrdersService implements ServiceInterface<Order> {
+public class OrdersService implements ServiceInterface<OrderGet> {
     @Override
-    public Response create(Order order) {
-        Order response = new OrderHandler().create(order);
+    public Response create(OrderGet order) {
+        OrderGet response = new OrderHandler().createOrder(order);
         if (response != null)
             return  Response.ok(true, MediaType.APPLICATION_JSON).build();
         else
@@ -35,8 +36,8 @@ public class OrdersService implements ServiceInterface<Order> {
     }
 
     @Override
-    public Response update(Order order) {
-        return  Response.ok(new OrderHandler().update(order), MediaType.APPLICATION_JSON).build();
+    public Response update(OrderGet order) {
+        return  Response.ok(new OrderHandler().updateOrder(order), MediaType.APPLICATION_JSON).build();
     }
 
     @Override

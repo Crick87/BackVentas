@@ -1,11 +1,14 @@
 package com.pythonteam.databases;
 
 import com.pythonteam.dao.OrderDao;
+import com.pythonteam.dao.ProductDao;
 import com.pythonteam.models.Order;
+import com.pythonteam.models.OrderGet;
 import com.pythonteam.models.Product;
 import org.jdbi.v3.core.mapper.reflect.BeanMapper;
 import org.jdbi.v3.core.result.LinkedHashMapRowReducer;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -72,14 +75,34 @@ public class OrderHandler implements BaseHandler<Order,Integer> {
 
     @Override
     public Order update(Order order) {
-        return Database.getJdbi().withExtension(OrderDao.class, dao -> {
-            return null;
-        });
+        return null;
+    }
+
+
+    public OrderGet updateOrder(OrderGet order) {
+
+        for (Product p :
+                order.getProductList())
+        {
+            Database.getJdbi().withExtension(OrderDao.class, dao -> dao.updateProduct(order.getId(),p.getQuantity(),p.getId()));
+        }
+
+
+        return Database.getJdbi().withExtension(OrderDao.class, dao -> dao.updateStatus(order.getId(),order.isStatus()));
     }
 
     @Override
-    public Order create(Order order) {
+    public Order create(Order order) throws SQLException {
+        return null;
+    }
+
+
+    public OrderGet createOrder(OrderGet order) {
         order.setId(Database.getJdbi().withExtension(OrderDao.class, dao -> dao.create(order.getCustomerId())));
+        for (Product p :
+                order.getProductList()) {
+            Database.getJdbi().withExtension(OrderDao.class, dao -> dao.addProduct(order.getId(),p.getId(),p.getQuantity()));
+        }
         return order;
     }
-    }
+}

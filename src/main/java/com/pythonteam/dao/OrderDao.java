@@ -1,6 +1,7 @@
 package com.pythonteam.dao;
 
 import com.pythonteam.models.Order;
+import com.pythonteam.models.OrderGet;
 import com.pythonteam.models.Product;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.config.RegisterJoinRowMapper;
@@ -32,7 +33,7 @@ public interface OrderDao {
     @SqlUpdate("update orders set status = :status where id = :id")
     @GetGeneratedKeys
     @RegisterBeanMapper(Order.class)
-    Order updateStatus(@Bind("id") int id, @Bind("status") boolean status);
+    OrderGet updateStatus(@Bind("id") int id, @Bind("status") boolean status);
 
     @SqlUpdate("update customer_order set quantity = :quantity where productId = :id and orderId = :orderId")
     @GetGeneratedKeys
