@@ -1,6 +1,7 @@
 package com.pythonteam.filters;
 
 import com.pythonteam.databases.TokenHandler;
+import com.pythonteam.models.User;
 
 import javax.annotation.Priority;
 import javax.ws.rs.NotAuthorizedException;
@@ -32,8 +33,10 @@ public class TokenSecuredFilter implements ContainerRequestFilter {
         try {
 
             // Validate the token
-            new TokenHandler().findOne(token);
+            User x = new TokenHandler().findOne(token);
 
+            if (x==null)
+                requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
         } catch (Exception e) {
             requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
         }

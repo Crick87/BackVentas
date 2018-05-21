@@ -18,6 +18,7 @@ public class Order {
 
     @ColumnName("orderdate")
     private LocalDate orderdate;
+    
     private List<Product> productList = new ArrayList<>();
 
     public List<Product> getProductList() {

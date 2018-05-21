@@ -16,6 +16,17 @@ public class Product {
     @ColumnName("stock")
     private int stock;
 
+    @ColumnName("quantity")
+    private int quantity;
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
     public int getStock() {
         return stock;
     }
