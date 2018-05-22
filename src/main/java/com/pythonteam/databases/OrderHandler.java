@@ -47,22 +47,22 @@ public class OrderHandler implements BaseHandler<Order,Integer> {
 
     @Override
     public Order findOne(Integer orderid) {
-        Optional<Order> orders = Database.getJdbi().withHandle(handle ->
+        Optional<Order> order = Database.getJdbi().withHandle(handle ->
                 handle.createQuery(selectOne)
                         .bind("id", orderid)
                         .registerRowMapper(BeanMapper.factory(Order.class, "o"))
                         .registerRowMapper(BeanMapper.factory(Product.class, "p"))
                         .<Integer, Order>reduceRows(((map, rowView) -> {
-                            Order order = map.computeIfAbsent(
+                            Order orderTemp = map.computeIfAbsent(
                                     rowView.getColumn("o_orderid", Integer.class),
                                     id -> rowView.getRow(Order.class));
 
                             if (rowView.getColumn("p_id", Integer.class) != null) {
-                                order.addProduct(rowView.getRow(Product.class));
+                                orderTemp.addProduct(rowView.getRow(Product.class));
                             }
                         })).findFirst());
 
-        return orders.get();
+        return order.get();
     }
 
     @Override

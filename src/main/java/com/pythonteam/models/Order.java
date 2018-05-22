@@ -29,11 +29,11 @@ public class Order {
         this.productList = productList;
     }
 
-    public int getId() {
+    public int getOrderId() {
         return orderid;
     }
 
-    public void setId(int id) {
+    public void setOrderId(int id) {
         this.orderid = id;
     }
 
