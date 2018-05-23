@@ -1,7 +1,7 @@
 package com.pythonteam.models;
 
 public class OrderGet {
-    private int id;
+    private int orderid;
     private int customerId;
     private boolean status;
     private Product[] productList;
@@ -14,12 +14,12 @@ public class OrderGet {
         this.productList = productList;
     }
 
-    public int getId() {
-        return id;
+    public int getOrderId() {
+        return orderid;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setOrderId(int orderid) {
+        this.orderid = orderid;
     }
 
     public int getCustomerId() {

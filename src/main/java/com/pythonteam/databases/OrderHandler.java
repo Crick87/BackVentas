@@ -84,11 +84,11 @@ public class OrderHandler implements BaseHandler<Order,Integer> {
         for (Product p :
                 order.getProductList())
         {
-            Database.getJdbi().withExtension(OrderDao.class, dao -> dao.updateProduct(order.getId(),p.getQuantity(),p.getId()));
+            Database.getJdbi().withExtension(OrderDao.class, dao -> dao.updateProduct(order.getOrderId(),p.getQuantity(),p.getId()));
         }
 
 
-        return Database.getJdbi().withExtension(OrderDao.class, dao -> dao.updateStatus(order.getId(),order.isStatus()));
+        return Database.getJdbi().withExtension(OrderDao.class, dao -> dao.updateStatus(order.getOrderId(),order.isStatus()));
     }
 
     @Override
@@ -98,10 +98,10 @@ public class OrderHandler implements BaseHandler<Order,Integer> {
 
 
     public OrderGet createOrder(OrderGet order) {
-        order.setId(Database.getJdbi().withExtension(OrderDao.class, dao -> dao.create(order.getCustomerId())));
+        order.setOrderId(Database.getJdbi().withExtension(OrderDao.class, dao -> dao.create(order.getCustomerId())));
         for (Product p :
                 order.getProductList()) {
-            Database.getJdbi().withExtension(OrderDao.class, dao -> dao.addProduct(order.getId(),p.getId(),p.getQuantity()));
+            Database.getJdbi().withExtension(OrderDao.class, dao -> dao.addProduct(order.getOrderId(),p.getId(),p.getQuantity()));
         }
         return order;
     }

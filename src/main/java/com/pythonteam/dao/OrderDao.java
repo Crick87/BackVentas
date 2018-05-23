@@ -18,8 +18,8 @@ public interface OrderDao {
     @GetGeneratedKeys("id")
     int create(@Bind("customerId") int customerID);
 
-    @SqlUpdate("insert into customer_order(orderId, productId, quantity) VALUES (:orderId, :productId, :quantity);")
-    int addProduct(@Bind(":orderId") int orderId, @Bind("productId") int productID, @Bind("quantity") int quantity);
+    @SqlUpdate("insert into customer_order(orderid, productId, quantity) VALUES (:orderid, :productId, :quantity);")
+    int addProduct(@Bind("orderid") int orderId, @Bind("productId") int productID, @Bind("quantity") int quantity);
 
     @SqlUpdate("delete from orders where id = :id")
     boolean delete(@Bind("id") int id);
