@@ -14,9 +14,9 @@ import java.util.ArrayList;
 
 public interface OrderDao {
 
-    @SqlUpdate("INSERT INTO orders(customerId, orderDate) VALUES (:customerId,now());")
+    @SqlUpdate("INSERT INTO orders(customerId, orderDate, employeeId) VALUES (:customerId,now(),:employeeId);")
     @GetGeneratedKeys("id")
-    int create(@Bind("customerId") int customerID);
+    int create(@Bind("customerId") int customerID,@Bind("employeeId") int employeeId);
 
     @SqlUpdate("insert into customer_order(orderid, productId, quantity) VALUES (:orderid, :productId, :quantity);")
     int addProduct(@Bind("orderid") int orderId, @Bind("productId") int productID, @Bind("quantity") int quantity);
@@ -32,13 +32,13 @@ public interface OrderDao {
 
     @SqlUpdate("update orders set status = :status where id = :id")
     @GetGeneratedKeys
-    @RegisterBeanMapper(Order.class)
+    @RegisterBeanMapper(OrderGet.class)
     OrderGet updateStatus(@Bind("id") int id, @Bind("status") boolean status);
 
     @SqlUpdate("update customer_order set quantity = :quantity where productId = :id and orderId = :orderId")
     @GetGeneratedKeys
     @RegisterBeanMapper(Order.class)
-    Order updateProduct(@Bind("id") int id, @Bind("quntity") int quantity, @Bind("orderId") int orderId);
+    Order updateProduct( @Bind("orderId") int orderId, @Bind("id") int id, @Bind("quantity") int quantity);
 
 
 }

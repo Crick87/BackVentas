@@ -13,11 +13,22 @@ public class Order {
     @ColumnName("customerid")
     private int customerId;
 
+    @ColumnName("employeeId")
+    private int employeeId;
+
     @ColumnName("status")
     private boolean status;
 
     @ColumnName("orderdate")
     private LocalDate orderdate;
+
+    public int getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
+    }
 
     private List<Product> productList = new ArrayList<>();
 

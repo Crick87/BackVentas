@@ -1,16 +1,31 @@
 package com.pythonteam.models;
 
+import java.util.ArrayList;
+
 public class OrderGet {
     private int orderid;
     private int customerId;
+    private int employeeId;
     private boolean status;
-    private Product[] productList;
+    private ArrayList<Product> productList = new ArrayList<>();;
 
-    public Product[] getProductList() {
+    public int getEmployeeId() {
+        return employeeId;
+    }
+
+    public void addProduct(Product product)
+    {
+        productList.add(product);
+    }
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public ArrayList<Product> getProductList() {
         return productList;
     }
 
-    public void setProductList(Product[] productList) {
+    public void setProductList(ArrayList<Product> productList) {
         this.productList = productList;
     }
 

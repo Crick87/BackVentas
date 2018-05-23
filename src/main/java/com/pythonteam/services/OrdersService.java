@@ -23,7 +23,7 @@ public class OrdersService implements ServiceInterface<OrderGet> {
 
     @Override
     public Response read(int id) {
-        Order order = new OrderHandler().findOne(id);
+        OrderGet order = new OrderHandler().findOne(id);
         if (order == null)
             return Response.status(Response.Status.NOT_FOUND).build();
         else

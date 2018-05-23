@@ -15,9 +15,9 @@ import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
-public class OrderHandler implements BaseHandler<Order,Integer> {
+public class OrderHandler implements BaseHandler<OrderGet,Integer> {
 
-    String selectAll = "select orderid o_orderid, customerId o_customerid, status o_status, orderdate o_orderdate,quantity p_quantity, p.id p_id, p.name p_name, p.description p_description, price p_price from orders o" +
+    String selectAll = "select orderid o_orderid, customerId o_customerid, status o_status, orderdate o_orderdate,employeeId o_employeeId,quantity p_quantity, p.id p_id, p.name p_name, p.description p_description, price p_price from orders o" +
             "                   join customer_order on o.id = customer_order.orderId" +
             "                   join products p on customer_order.productId = p.id" +
             "                   join productPrices on p.id=productPrices.productId" +
@@ -29,15 +29,15 @@ public class OrderHandler implements BaseHandler<Order,Integer> {
     String selectOne = selectAll + " and orderid = :id";
 
     @Override
-    public List<Order> findAll() {
+    public List<OrderGet> findAll() {
         return Database.getJdbi().withHandle(handle ->
            handle.createQuery(selectAll)
-                   .registerRowMapper(BeanMapper.factory(Order.class, "o"))
+                   .registerRowMapper(BeanMapper.factory(OrderGet.class, "o"))
                    .registerRowMapper(BeanMapper.factory(Product.class, "p"))
-                   .<Integer, Order>reduceRows(((map, rowView) -> {
-                       Order order  = map.computeIfAbsent(
+                   .<Integer, OrderGet>reduceRows(((map, rowView) -> {
+                       OrderGet order  = map.computeIfAbsent(
                                rowView.getColumn("o_orderid", Integer.class),
-                               id -> rowView.getRow(Order.class));
+                               id -> rowView.getRow(OrderGet.class));
 
                        if (rowView.getColumn("p_id", Integer.class) != null) {
                            order.addProduct(rowView.getRow(Product.class));
@@ -46,16 +46,16 @@ public class OrderHandler implements BaseHandler<Order,Integer> {
     }
 
     @Override
-    public Order findOne(Integer orderid) {
-        Optional<Order> order = Database.getJdbi().withHandle(handle ->
+    public OrderGet findOne(Integer orderid) {
+        Optional<OrderGet> order = Database.getJdbi().withHandle(handle ->
                 handle.createQuery(selectOne)
                         .bind("id", orderid)
-                        .registerRowMapper(BeanMapper.factory(Order.class, "o"))
+                        .registerRowMapper(BeanMapper.factory(OrderGet.class, "o"))
                         .registerRowMapper(BeanMapper.factory(Product.class, "p"))
-                        .<Integer, Order>reduceRows(((map, rowView) -> {
-                            Order orderTemp = map.computeIfAbsent(
+                        .<Integer, OrderGet>reduceRows(((map, rowView) -> {
+                            OrderGet orderTemp = map.computeIfAbsent(
                                     rowView.getColumn("o_orderid", Integer.class),
-                                    id -> rowView.getRow(Order.class));
+                                    id -> rowView.getRow(OrderGet.class));
 
                             if (rowView.getColumn("p_id", Integer.class) != null) {
                                 orderTemp.addProduct(rowView.getRow(Product.class));
@@ -74,35 +74,33 @@ public class OrderHandler implements BaseHandler<Order,Integer> {
     }
 
     @Override
-    public Order update(Order order) {
+    public OrderGet update(OrderGet orderGet) {
+        return null;
+    }
+
+    @Override
+    public OrderGet create(OrderGet orderGet) throws SQLException {
         return null;
     }
 
 
     public OrderGet updateOrder(OrderGet order) {
 
-        for (Product p :
-                order.getProductList())
-        {
-            Database.getJdbi().withExtension(OrderDao.class, dao -> dao.updateProduct(order.getOrderId(),p.getQuantity(),p.getId()));
+        for (Product p : order.getProductList()) {
+            Database.getJdbi().withExtension(OrderDao.class, dao -> dao.updateProduct(order.getOrderId(),p.getId(),p.getQuantity()));
         }
-
-
-        return Database.getJdbi().withExtension(OrderDao.class, dao -> dao.updateStatus(order.getOrderId(),order.isStatus()));
+        Database.getJdbi().withExtension(OrderDao.class, dao -> dao.updateStatus(order.getOrderId(),order.isStatus()));
+        return findOne(order.getOrderId());
     }
 
-    @Override
-    public Order create(Order order) throws SQLException {
-        return null;
-    }
 
 
     public OrderGet createOrder(OrderGet order) {
-        order.setOrderId(Database.getJdbi().withExtension(OrderDao.class, dao -> dao.create(order.getCustomerId())));
+        order.setOrderId(Database.getJdbi().withExtension(OrderDao.class, dao -> dao.create(order.getCustomerId(),order.getEmployeeId())));
         for (Product p :
                 order.getProductList()) {
             Database.getJdbi().withExtension(OrderDao.class, dao -> dao.addProduct(order.getOrderId(),p.getId(),p.getQuantity()));
         }
-        return order;
+        return findOne(order.getOrderId());
     }
 }

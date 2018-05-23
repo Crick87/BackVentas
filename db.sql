@@ -103,12 +103,16 @@ create table orders(
   id serial primary key not null,
   customerId int references customers(id),
   status boolean default false,
-  orderDate date
+  orderDate date,
+  employeeId int references users(id)
 );
+
+alter table orders add column employeeId int references users(id);
+
 
 select id, name, description from products  where stock > 1;
 
-insert into orders(customerId, orderDate) VALUES (1,now());
+insert into orders(customerId, orderDate,employeeId) VALUES (1,now(),1);
 insert into customer_order(orderId, productId, quantity) VALUES (1,1,3);
 insert into customer_order(orderId, productId, quantity) VALUES (1,2,3);
 insert into customer_order(orderId, productId, quantity) VALUES (1,3,3);
