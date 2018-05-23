@@ -21,8 +21,8 @@ public interface OrderDao {
     @SqlUpdate("delete from customer_order where orderId = :id")
     boolean deleteOrder(@Bind("id") int id);
 
-    @SqlUpdate("delete from customer_order where productId = :id")
-    boolean deleteProduct(@Bind("id") int id);
+    @SqlUpdate("delete from customer_order where orderId = :id")
+    boolean deleteProducts(@Bind("id") int id);
 
     @SqlUpdate("update orders set status = :status where id = :id")
     @GetGeneratedKeys
@@ -33,6 +33,4 @@ public interface OrderDao {
     @GetGeneratedKeys
     @RegisterBeanMapper(OrderGet.class)
     OrderGet updateProduct( @Bind("orderId") int orderId, @Bind("id") int id, @Bind("quantity") int quantity);
-
-
 }

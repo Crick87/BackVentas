@@ -84,7 +84,7 @@ public class OrderHandler implements BaseHandler<OrderGet,Integer> {
 
 
     public OrderGet updateOrder(OrderGet order) {
-
+        Database.getJdbi().withExtension(OrderDao.class, dao -> dao.deleteProducts(order.getOrderId()));
         for (Product p : order.getProductList()) {
             Database.getJdbi().withExtension(OrderDao.class, dao -> dao.updateProduct(order.getOrderId(),p.getId(),p.getQuantity()));
         }
