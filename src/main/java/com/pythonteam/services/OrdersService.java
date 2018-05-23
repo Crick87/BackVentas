@@ -1,10 +1,7 @@
 package com.pythonteam.services;
 
 import com.pythonteam.databases.OrderHandler;
-import com.pythonteam.databases.ProductHandler;
-import com.pythonteam.models.Order;
 import com.pythonteam.models.OrderGet;
-import com.pythonteam.models.Product;
 
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;

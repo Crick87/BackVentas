@@ -2,7 +2,6 @@ package com.pythonteam.databases;
 
 import com.pythonteam.dao.OrderDao;
 import com.pythonteam.dao.ProductDao;
-import com.pythonteam.models.Order;
 import com.pythonteam.models.OrderGet;
 import com.pythonteam.models.Product;
 import org.jdbi.v3.core.mapper.reflect.BeanMapper;

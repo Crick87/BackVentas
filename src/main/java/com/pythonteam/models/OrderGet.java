@@ -1,5 +1,8 @@
 package com.pythonteam.models;
 
+import org.jdbi.v3.core.mapper.reflect.ColumnName;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class OrderGet {
@@ -7,6 +10,17 @@ public class OrderGet {
     private int customerId;
     private int employeeId;
     private boolean status;
+    @ColumnName("orderdate")
+    private LocalDate orderdate;
+
+    public LocalDate getOrderdate() {
+        return orderdate;
+    }
+
+    public void setOrderdate(LocalDate orderdate) {
+        this.orderdate = orderdate;
+    }
+
     private ArrayList<Product> productList = new ArrayList<>();;
 
     public int getEmployeeId() {

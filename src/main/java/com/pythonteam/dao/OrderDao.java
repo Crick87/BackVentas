@@ -1,16 +1,10 @@
 package com.pythonteam.dao;
 
-import com.pythonteam.models.Order;
 import com.pythonteam.models.OrderGet;
-import com.pythonteam.models.Product;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
-import org.jdbi.v3.sqlobject.config.RegisterJoinRowMapper;
 import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.GetGeneratedKeys;
-import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
-
-import java.util.ArrayList;
 
 public interface OrderDao {
 
@@ -37,8 +31,8 @@ public interface OrderDao {
 
     @SqlUpdate("update customer_order set quantity = :quantity where productId = :id and orderId = :orderId")
     @GetGeneratedKeys
-    @RegisterBeanMapper(Order.class)
-    Order updateProduct( @Bind("orderId") int orderId, @Bind("id") int id, @Bind("quantity") int quantity);
+    @RegisterBeanMapper(OrderGet.class)
+    OrderGet updateProduct( @Bind("orderId") int orderId, @Bind("id") int id, @Bind("quantity") int quantity);
 
 
 }
