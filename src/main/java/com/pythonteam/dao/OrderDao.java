@@ -29,8 +29,8 @@ public interface OrderDao {
     @RegisterBeanMapper(OrderGet.class)
     OrderGet updateStatus(@Bind("id") int id, @Bind("status") boolean status);
 
-    @SqlUpdate("update customer_order set quantity = :quantity where productId = :id and orderId = :orderId")
+    @SqlUpdate("insert into customer_order(orderid, productid, quantity) values (:orderid, :productid, :quantity );")
     @GetGeneratedKeys
     @RegisterBeanMapper(OrderGet.class)
-    OrderGet updateProduct( @Bind("orderId") int orderId, @Bind("id") int id, @Bind("quantity") int quantity);
+    OrderGet updateProduct( @Bind("orderid") int orderId, @Bind("productid") int id, @Bind("quantity") int quantity);
 }

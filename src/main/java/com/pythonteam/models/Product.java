@@ -1,22 +1,12 @@
 package com.pythonteam.models;
 
-import org.jdbi.v3.core.mapper.reflect.ColumnName;
-
 public class Product {
-    @ColumnName("id")
     private int id;
-
-    @ColumnName("name")
     private String name;
-    @ColumnName("description")
     private String description;
-    @ColumnName("price")
     private double price;
-
-    @ColumnName("stock")
     private int stock;
 
-    @ColumnName("quantity")
     private int quantity;
 
     public int getQuantity() {
@@ -35,18 +25,8 @@ public class Product {
         this.stock = stock;
     }
 
-    private byte[] image;
-
     public double getPrice() {
         return price;
-    }
-
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
     }
 
     public void setPrice(double price) {

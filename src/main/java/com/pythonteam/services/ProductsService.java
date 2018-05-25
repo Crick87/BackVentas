@@ -6,6 +6,7 @@ import com.pythonteam.models.Product;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 @Path("/products")
 public class ProductsService implements ServiceInterface<Product> {
@@ -31,7 +32,8 @@ public class ProductsService implements ServiceInterface<Product> {
 
     @Override
     public Response readAll() {
-            return Response.ok(new ProductHandler().findAll(), MediaType.APPLICATION_JSON).build();
+        List<Product> products = new ProductHandler().findAll();
+        return Response.ok(products, MediaType.APPLICATION_JSON).build();
     }
 
     @Override
