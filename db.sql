@@ -161,6 +161,17 @@ select orderid o_orderid, customerId o_customerid, status o_status, orderdate o_
                          where p.id = productPrices.productId and date <= now()) and orderid = 1;
 
 
-select orderid, id, name, stock, quantity
-from customer_order
-  right join products p on customer_order.productId = p.id;
+select productId, name, stock, quantity from products right outer join customer_order o on products.id = o.productId where orderId = 1;
+
+select id, name, price, stock from products join productPrices on id=productId
+where date = (SELECT
+                MAX(date)
+              from productPrices
+              where id = productId and date <= now()) and id not in ((select productId
+            from customer_order where orderId = 1)) order by id;
+
+select productId, name, stock, quantity from products right outer join customer_order o on products.id = o.productId where orderId = 1;
+
+
+select * from customers where id not in (select idCustomer from routes join customers c on routes.idCustomer = c.id order by IdRoute);
+

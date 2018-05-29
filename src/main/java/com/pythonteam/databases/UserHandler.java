@@ -1,6 +1,7 @@
 package com.pythonteam.databases;
 
 import com.pythonteam.dao.UserDao;
+import com.pythonteam.models.Customer;
 import com.pythonteam.models.Route;
 import com.pythonteam.models.User;
 import org.mindrot.jbcrypt.BCrypt;
@@ -45,5 +46,27 @@ public class UserHandler implements BaseHandler<User,Integer> {
             return u;
         else
             return null;
+    }
+
+    public ArrayList<Route> findRoutes() {
+        return Database.getJdbi().withExtension(UserDao.class, dao -> dao.findAllRoutes());
+    }
+
+    public ArrayList<Customer> readCustomers() {
+        return Database.getJdbi().withExtension(UserDao.class, dao -> dao.readCustomers());
+    }
+
+    public boolean delRoute(int idEmployee, int idCustomer) {
+        return Database.getJdbi().withExtension(UserDao.class, dao -> dao.deleteRoute(idEmployee,idCustomer));
+    }
+
+    public Route createRoute(Route route) {
+        Database.getJdbi().withExtension(UserDao.class, dao-> dao.createRoute(route.getIdRoute(),route.getIdCustomer(),route.getIdEmployee()) );
+        return route;
+    }
+
+    public Route updateRoute(Route route) {
+        Database.getJdbi().withExtension(UserDao.class, dao-> dao.updateRoute(route.getIdRoute(),route.getIdCustomer(),route.getIdEmployee()) );
+        return route;
     }
 }

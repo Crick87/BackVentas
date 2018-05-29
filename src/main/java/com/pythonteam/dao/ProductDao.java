@@ -33,6 +33,8 @@ public interface ProductDao {
     int createImage(@Bind("image") String image, @Bind("id") int id);
 
 
+
+
     @SqlUpdate("insert into productPrices(productId, date, price) values (:productId,now(),:price);")
     int createPrice(@Bind("productId") int productID, @Bind("price") double price);
 

@@ -1,5 +1,6 @@
 package com.pythonteam.dao;
 
+import com.pythonteam.models.Customer;
 import com.pythonteam.models.Route;
 import com.pythonteam.models.User;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
@@ -41,4 +42,24 @@ public interface UserDao {
     @RegisterBeanMapper(Route.class)
     ArrayList<Route>findRoutes(@Bind("id") int id);
 
+    @SqlQuery("select idRoute, idEmployee,idCustomer from users e join routes join customers c on routes.idCustomer = c.id on e.id = routes.idEmployee order by IdRoute;")
+    @RegisterBeanMapper(Route.class)
+    ArrayList<Route> findAllRoutes();
+
+    @SqlQuery("select * from customers where id not in (select idCustomer from routes join customers c on routes.idCustomer = c.id order by IdRoute);")
+    @RegisterBeanMapper(Customer.class)
+    ArrayList<Customer> readCustomers();
+
+    @SqlUpdate("delete from routes where idemployee = :idemployee and idcustomer = :idcustomer")
+    boolean deleteRoute(@Bind("idemployee") int idemployee,@Bind("idcustomer") int idcustomer);
+
+    @SqlUpdate("INSERT INTO routes(idroute, idcustomer, idemployee) VALUES (:idroute,:idcustomer,:idemployee);")
+    @GetGeneratedKeys("idroute")
+    int createRoute(@Bind("idroute") int idRoute,@Bind("idcustomer") int idCustomer,@Bind("idemployee") int idEmployee);
+
+
+    @SqlUpdate("update routes set idroute = :idroute, idcustomer = :idcustomer, idemployee = :idemployee where idemployee = :idemployee and idcustomer=:idcustomer")
+    @GetGeneratedKeys
+    @RegisterBeanMapper(Route.class)
+    Route updateRoute(@Bind("idroute") int idRoute,@Bind("idcustomer") int idCustomer,@Bind("idemployee") int idEmployee);
 }

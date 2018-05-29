@@ -34,6 +34,8 @@ dependencies {
 
     //Jackson
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.5'
+    compile group: 'com.fasterxml.jackson.module', name: 'jackson-modules-java8', version: '2.9.5', ext: 'pom'
+
 
     //Postgresql
     compile group: 'org.postgresql', name: 'postgresql', version: '42.2.2'

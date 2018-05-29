@@ -1,5 +1,6 @@
 package com.pythonteam.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.jdbi.v3.core.mapper.reflect.ColumnName;
 
 import java.time.LocalDate;
@@ -11,6 +12,7 @@ public class OrderGet {
     private int employeeId;
     private boolean status;
     @ColumnName("orderdate")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate orderdate;
 
     public LocalDate getOrderdate() {
