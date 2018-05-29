@@ -29,12 +29,6 @@ public interface ProductDao {
     @GetGeneratedKeys("id")
     int create(@Bind("name") String name, @Bind("description") String description, @Bind("stock") int stock);
 
-    @SqlUpdate("update products set image = :image where id = :id;")
-    int createImage(@Bind("image") String image, @Bind("id") int id);
-
-
-
-
     @SqlUpdate("insert into productPrices(productId, date, price) values (:productId,now(),:price);")
     int createPrice(@Bind("productId") int productID, @Bind("price") double price);
 
@@ -49,4 +43,6 @@ public interface ProductDao {
     @RegisterBeanMapper(Product.class)
     Product update(@Bind("id") int id, @Bind("name") String name, @Bind("description") String description, @Bind("stock") int stock);
 
+    @SqlUpdate("update products set stock = :stock where id = :id")
+    int updateStock(@Bind("id") int id,@Bind("stock") int stock);
 }

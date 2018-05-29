@@ -1,25 +1,16 @@
 package com.pythonteam.databases;
 
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
-import com.google.firebase.messaging.*;
+
 import com.pythonteam.dao.OrderDao;
 import com.pythonteam.dao.ProductDao;
 import com.pythonteam.models.OrderGet;
 import com.pythonteam.models.Product;
 import org.jdbi.v3.core.mapper.reflect.BeanMapper;
-import org.jdbi.v3.core.result.LinkedHashMapRowReducer;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.ExecutionException;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -101,35 +92,19 @@ public class OrderHandler implements BaseHandler<OrderGet,Integer> {
         Database.getJdbi().withExtension(OrderDao.class, dao -> dao.updateStatus(order.getOrderId(),order.isStatus(),order.getCustomerId()));
         if (order.isStatus())
         {
-            FileInputStream serviceAccount = null;
-            try {
-                serviceAccount = new FileInputStream("account_key.json");
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+            for (Product product: order.getProductList()) {
+                Product ori = Database.getJdbi().withExtension(ProductDao.class, dao -> dao.findOne(product.getId()));
+                int change = 0;
 
-            FirebaseOptions options = null;
-            try {
-                options = new FirebaseOptions.Builder()
-                        .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                        .setDatabaseUrl("https://ventasapp-bc71e.firebaseio.com")
-                        .build();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            FirebaseApp.initializeApp(options);
-
-            Message message = Message.builder()
-                    .setNotification(new Notification("Notificacion", "orden complete"))
-                    .setAndroidConfig(AndroidConfig.builder()
-                            .build())
-                    .setTopic("auto-news")
-                    .build();
-            try {
-                FirebaseMessaging.getInstance().sendAsync(message).get();
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
+                if (product.getQuantity() > ori.getStock())
+                {
+                    Database.getJdbi().withExtension(OrderDao.class, dao -> dao.updateStatus(order.getOrderId(),false,order.getCustomerId()));
+                    change = 0;
+                }
+                else change = ori.getStock() - product.getQuantity();
+                int finalChange = change;
+                System.out.println(finalChange);
+                Database.getJdbi().withExtension(ProductDao.class, dao -> dao.updateStock(product.getId(), finalChange));
             }
         }
         return findOne(order.getOrderId());
