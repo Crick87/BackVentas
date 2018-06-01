@@ -3,6 +3,8 @@ package com.pythonteam.services;
 import com.pythonteam.databases.TokenHandler;
 import com.pythonteam.models.User;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -31,7 +33,7 @@ public class TokensService implements ServiceInterface<User> {
 
     @Override
     public Response readAll() {
-        return Response.serverError().entity("No implementado").build();
+        return  Response.ok(new TokenHandler().findAll(), MediaType.APPLICATION_JSON).build();
     }
 
     @Override
@@ -42,5 +44,17 @@ public class TokensService implements ServiceInterface<User> {
     @Override
     public Response delete(int id) {
         return Response.serverError().entity("No implementado").build();
+    }
+
+    @DELETE
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/token")
+    public Response delete(User user)
+    {
+        boolean response = new TokenHandler().delete(user.getId(), user.getToken());
+        if (!response)
+            return Response.status(Response.Status.NOT_FOUND).build();
+        else
+            return Response.ok(true, MediaType.APPLICATION_JSON).build();
     }
 }

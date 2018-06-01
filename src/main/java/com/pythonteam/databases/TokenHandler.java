@@ -19,7 +19,7 @@ public class TokenHandler implements BaseHandler<User,String>{
     private static final long ttl = TimeUnit.DAYS.toMillis(120);
     @Override
     public List<User> findAll() {
-        return null;
+        return Database.getJdbi().withExtension(TokenDao.class, TokenDao::list);
     }
 
     @Override
@@ -46,6 +46,12 @@ public class TokenHandler implements BaseHandler<User,String>{
     public boolean delete(String id) {
         return false;
     }
+
+
+    public boolean delete(int id, String token) {
+        return Database.getJdbi().withExtension(TokenDao.class, dao -> dao.delete(id,token));
+    }
+
     @Override
     public User update(User token) {
         return null;
