@@ -14,12 +14,12 @@ public interface TokenDao {
     @RegisterBeanMapper(Token.class)
     ArrayList<Token> list();
 
-    @SqlQuery("select * from tokens where token = :token")
+    @SqlQuery("select * from tokens where token = :token and userid = :userid")
     @RegisterBeanMapper(Token.class)
-    Token findOne(@Bind("token") String token);
+    Token findOne(@Bind("token") String token, @Bind("userid") int userid);
 
-    @SqlUpdate("INSERT INTO tokens(token) VALUES (:token);")
-    boolean create(@Bind("token") String token);
+    @SqlUpdate("INSERT INTO tokens(token, userid ) VALUES (:token, :userid);")
+    boolean create(@Bind("token") String token, @Bind("userid") int userid);
 
 
 }

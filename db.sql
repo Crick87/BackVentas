@@ -143,8 +143,10 @@ create table customer_order(
   primary key (orderId,productId)
 );
 
+drop table if exists tokens;
 create table tokens(
   id serial primary key not null,
+  userid int references users(id),
   token varchar(100) not null
 );
 
@@ -175,3 +177,4 @@ select productId, name, stock, quantity from products right outer join customer_
 
 select * from customers where id not in (select idCustomer from routes join customers c on routes.idCustomer = c.id order by IdRoute);
 
+select * from tokens where token  = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJlbGNyaXN0aWFuIiwiZXhwIjoxNTM4MjUxMDIyLCJ1c2VyaWQiOjN9.vVvIvNNBQb5Qsl9ipoLaqqiO68ciUJRvLq-IK-Qz1y0';

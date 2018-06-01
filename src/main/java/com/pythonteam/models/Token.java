@@ -4,10 +4,6 @@ public class Token {
     private int id;
     private String token;
 
-    Token(){
-
-    }
-
     public int getId() {
         return id;
     }

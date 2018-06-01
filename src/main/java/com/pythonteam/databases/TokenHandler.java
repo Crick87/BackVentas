@@ -4,6 +4,8 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.pythonteam.dao.TokenDao;
+import com.pythonteam.models.Token;
 import com.pythonteam.models.User;
 
 import java.io.UnsupportedEncodingException;
@@ -14,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 public class TokenHandler implements BaseHandler<User,String>{
 
-    private static final long ttl = TimeUnit.DAYS.toMillis(48);
+    private static final long ttl = TimeUnit.DAYS.toMillis(120);
     @Override
     public List<User> findAll() {
         return null;
@@ -30,6 +32,10 @@ public class TokenHandler implements BaseHandler<User,String>{
             DecodedJWT jwt = verifier.verify(id);
             final int userId = jwt.getClaim("userid").asInt();
             User user = new UserHandler().findOne(userId);
+            Token tok = Database.getJdbi().withExtension(TokenDao.class, dao -> dao.findOne(id, userId));
+            if (tok == null){
+                return null;
+            }
             return user ;
         } catch (Exception e) {
             return null;
@@ -64,6 +70,8 @@ public class TokenHandler implements BaseHandler<User,String>{
                     .withIssuer("elcristian")
                     .sign(algorithm);
             user.setToken(token);
+            User finalUser = user;
+            Database.getJdbi().withExtension(TokenDao.class, dao -> dao.create(token, finalUser.getId()));
             return user;
         }
         throw new SQLException("eres p");

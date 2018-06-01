@@ -6,7 +6,7 @@ import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
 public interface FireDao {
 
-    @SqlUpdate("INSERT INTO tokens(token) VALUES (:token);")
-    int add(@Bind("token") String token);
+    @SqlUpdate("INSERT INTO firetokens(token) VALUES (:token);")
+    boolean add(@Bind("token") String token);
 
 }
