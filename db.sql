@@ -56,7 +56,8 @@ create table products(
   name varchar(150) not null ,
   description varchar(150) not null,
   image varchar(100),
-  stock int not null
+  stock int not null,
+  available int not null
 );
 
 update products set image = null;
@@ -177,4 +178,10 @@ select productId, name, stock, quantity from products right outer join customer_
 
 select * from customers where id not in (select idCustomer from routes join customers c on routes.idCustomer = c.id order by IdRoute);
 
-select id, token, username, name from tokens join users on tokens.userid = users.id;
+select users.id as id, token, username, name from tokens join users on tokens.userid = users.id;
+
+create table firetoken(
+  id serial not null primary key ,
+  token text
+);
+

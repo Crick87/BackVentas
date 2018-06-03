@@ -10,13 +10,13 @@ import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import java.util.ArrayList;
 
 public interface ProductDao {
-    @SqlQuery("select id, name, description, price, stock from products join productPrices on id=productId" +
+    @SqlQuery("select id, name, description, price, stock,available from products join productPrices on id=productId" +
             " where date = (SELECT MAX(date) from productPrices" +
             " where id = productId and date <= now()) order by id;")
     @RegisterBeanMapper(Product.class)
     ArrayList<Product> list();
 
-    @SqlQuery("select id, name, description, price, stock from products join productPrices on id=productId" +
+    @SqlQuery("select id, name, description, price, stock,available from products join productPrices on id=productId" +
             " where date = (SELECT" +
             " MAX(date)" +
             " from productPrices" +
@@ -25,7 +25,7 @@ public interface ProductDao {
     Product findOne(@Bind("id") int id);
 
 
-    @SqlUpdate("INSERT INTO products(name, description, stock) VALUES (:name,:description,:stock);")
+    @SqlUpdate("INSERT INTO products(name, description, stock, available) VALUES (:name,:description,:stock, :stock);")
     @GetGeneratedKeys("id")
     int create(@Bind("name") String name, @Bind("description") String description, @Bind("stock") int stock);
 
@@ -38,11 +38,11 @@ public interface ProductDao {
     @SqlUpdate("delete from productPrices where productId = :id")
     boolean deletePrice(@Bind("id") int id);
 
-    @SqlUpdate("update products set name = :name, description = :description, stock = :stock where id = :id")
+    @SqlUpdate("update products set name = :name, description = :description, stock = :stock, available = :available where id = :id")
     @GetGeneratedKeys
     @RegisterBeanMapper(Product.class)
-    Product update(@Bind("id") int id, @Bind("name") String name, @Bind("description") String description, @Bind("stock") int stock);
+    Product update(@Bind("id") int id, @Bind("name") String name, @Bind("description") String description, @Bind("stock") int stock, @Bind("available") int available);
 
-    @SqlUpdate("update products set stock = :stock where id = :id")
+    @SqlUpdate("update products set available = :stock where id = :id")
     int updateStock(@Bind("id") int id,@Bind("stock") int stock);
 }

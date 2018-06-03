@@ -6,6 +6,15 @@ public class Product {
     private String description;
     private double price;
     private int stock;
+    private int available;
+
+    public int getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(int available) {
+        this.available = available;
+    }
 
     private int quantity;
 

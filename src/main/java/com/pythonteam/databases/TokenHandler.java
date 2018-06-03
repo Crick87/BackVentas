@@ -32,7 +32,7 @@ public class TokenHandler implements BaseHandler<User,String>{
             DecodedJWT jwt = verifier.verify(id);
             final int userId = jwt.getClaim("userid").asInt();
             User user = new UserHandler().findOne(userId);
-            Token tok = Database.getJdbi().withExtension(TokenDao.class, dao -> dao.findOne(id, userId));
+            Token tok = Database.getJdbi().withExtension(TokenDao.class, dao -> dao.findOne(userId));
             if (tok == null){
                 return null;
             }
@@ -62,23 +62,33 @@ public class TokenHandler implements BaseHandler<User,String>{
         user = new UserHandler().checkPass(user);
         if (user != null)
         {
-            final long nowMills = System.currentTimeMillis();
-            final long expTime = nowMills + ttl;
-            Algorithm algorithm = null;
-            try {
-                algorithm = Algorithm.HMAC256("secret");
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
+            User finalUser1 = user;
+            Token tok = Database.getJdbi().withExtension(TokenDao.class, dao -> dao.findOne(finalUser1.getId()));
+            if(tok != null)
+            {
+                user.setToken(tok.getToken());
+                return user;
             }
-            String token = JWT.create()
-                    .withExpiresAt(new Date(expTime))
-                    .withClaim("userid", user.getId())
-                    .withIssuer("elcristian")
-                    .sign(algorithm);
-            user.setToken(token);
-            User finalUser = user;
-            Database.getJdbi().withExtension(TokenDao.class, dao -> dao.create(token, finalUser.getId()));
-            return user;
+            else {
+                final long nowMills = System.currentTimeMillis();
+                final long expTime = nowMills + ttl;
+                Algorithm algorithm = null;
+                try {
+                    algorithm = Algorithm.HMAC256("secret");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+
+                String token = JWT.create()
+                        .withExpiresAt(new Date(expTime))
+                        .withClaim("userid", user.getId())
+                        .withIssuer("elcristian")
+                        .sign(algorithm);
+                user.setToken(token);
+                User finalUser = user;
+                Database.getJdbi().withExtension(TokenDao.class, dao -> dao.create(token, finalUser.getId()));
+                return user;
+            }
         }
         throw new SQLException("eres p");
     }
