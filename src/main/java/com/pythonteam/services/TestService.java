@@ -18,13 +18,10 @@ public class TestService {
     public Response test(User user)
     {
         if (user == null)
-        {
             return Response.serverError().entity("No hay token").build();
-        }
-        User x = new TokenHandler().findOne(user.getToken());
+        User x = TokenHandler.getInstance().findOne(user.getToken());
         if (x == null)
             return Response.status(Response.Status.UNAUTHORIZED).build();
-        return Response.ok(new TokenHandler().findOne(user.getToken()), MediaType.APPLICATION_JSON).build();
+        return Response.ok(x, MediaType.APPLICATION_JSON).build();
     }
-
 }

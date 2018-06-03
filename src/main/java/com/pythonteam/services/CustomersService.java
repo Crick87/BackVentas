@@ -11,7 +11,7 @@ import javax.ws.rs.core.Response;
 public class CustomersService implements ServiceInterface<Customer> {
     @Override
     public Response create(Customer customer) {
-        Customer response = new CustomerHandler().create(customer);
+        Customer response = CustomerHandler.getInstance().create(customer);
         if (response != null)
             return  Response.ok(true, MediaType.APPLICATION_JSON).build();
         else
@@ -20,7 +20,7 @@ public class CustomersService implements ServiceInterface<Customer> {
 
     @Override
     public Response read(int id) {
-        Customer customer = new CustomerHandler().findOne(id);
+        Customer customer = CustomerHandler.getInstance().findOne(id);
         if (customer == null)
             return Response.status(Response.Status.NOT_FOUND).build();
         else
@@ -29,17 +29,17 @@ public class CustomersService implements ServiceInterface<Customer> {
 
     @Override
     public Response readAll() {
-            return Response.ok(new CustomerHandler().findAll(), MediaType.APPLICATION_JSON).build();
+            return Response.ok(CustomerHandler.getInstance().findAll(), MediaType.APPLICATION_JSON).build();
     }
 
     @Override
     public Response update(Customer customer) {
-        return  Response.ok(new CustomerHandler().update(customer), MediaType.APPLICATION_JSON).build();
+        return  Response.ok(CustomerHandler.getInstance().update(customer), MediaType.APPLICATION_JSON).build();
     }
 
     @Override
     public Response delete(int id) {
-        boolean response = new CustomerHandler().delete(id);
+        boolean response = CustomerHandler.getInstance().delete(id);
         if (response){
             return  Response.ok(true, MediaType.APPLICATION_JSON).build();
         } else

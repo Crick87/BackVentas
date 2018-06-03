@@ -12,6 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserHandler implements BaseHandler<User,Integer> {
+
+    private static class SingletonHelper{
+        private static final UserHandler INSTANCE = new UserHandler();
+    }
+
+    public static UserHandler getInstance(){
+        return SingletonHelper.INSTANCE;
+    }
     @Override
     public List<User> findAll() {
         return Database.getJdbi().withExtension(UserDao.class, UserDao::list);

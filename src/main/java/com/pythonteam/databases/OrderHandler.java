@@ -16,6 +16,14 @@ import static java.util.stream.Collectors.toList;
 
 public class OrderHandler implements BaseHandler<OrderGet,Integer> {
 
+    private static class SingletonHelper{
+        private static final OrderHandler INSTANCE = new OrderHandler();
+    }
+
+    public static OrderHandler getInstance(){
+        return SingletonHelper.INSTANCE;
+    }
+
     String selectAll = "select orderid o_orderid, customerId o_customerid, status o_status, orderdate o_orderdate, completeddate o_completeddate,employeeId o_employeeId,quantity p_quantity, p.id p_id, p.name p_name, p.description p_description, price p_price, stock p_stock from orders o" +
             "                   join customer_order on o.id = customer_order.orderId" +
             "                   join products p on customer_order.productId = p.id" +
@@ -23,7 +31,7 @@ public class OrderHandler implements BaseHandler<OrderGet,Integer> {
             "                   where date = (SELECT" +
             "                   MAX(date)" +
             "                   from productPrices" +
-            "                   where p.id = productPrices.productId and date <= now() order by id)";
+            "                   where p.id = productPrices.productId and date <= now())";
 
     String selectOne = selectAll + " and orderid = :id";
 

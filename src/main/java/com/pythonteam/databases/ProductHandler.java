@@ -6,6 +6,13 @@ import com.pythonteam.models.Product;
 import java.util.List;
 
 public class ProductHandler implements BaseHandler<Product,Integer> {
+    private static class SingletonHelper{
+        private static final ProductHandler INSTANCE = new ProductHandler();
+    }
+
+    public static ProductHandler getInstance(){
+        return SingletonHelper.INSTANCE;
+    }
 
     @Override
     public List<Product> findAll() {

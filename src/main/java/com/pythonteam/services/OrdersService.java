@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class OrdersService implements ServiceInterface<OrderGet> {
     @Override
     public Response create(OrderGet order) {
-        OrderGet response = new OrderHandler().createOrder(order);
+        OrderGet response = OrderHandler.getInstance().createOrder(order);
         if (response != null)
             return  Response.ok(true, MediaType.APPLICATION_JSON).build();
         else
@@ -25,7 +25,7 @@ public class OrdersService implements ServiceInterface<OrderGet> {
 
     @Override
     public Response read(int id) {
-        OrderGet order = new OrderHandler().findOne(id);
+        OrderGet order = OrderHandler.getInstance().findOne(id);
         if (order == null)
             return Response.status(Response.Status.NOT_FOUND).build();
         else
@@ -36,8 +36,8 @@ public class OrdersService implements ServiceInterface<OrderGet> {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("products/{id}")
     public Response getProducts(@PathParam("id") int id) {
-        ArrayList<Product> products = new OrderHandler().getProducts(id);
-        ArrayList<Product> products2 = new OrderHandler().findOne(id).getProductList();
+        ArrayList<Product> products = OrderHandler.getInstance().getProducts(id);
+        ArrayList<Product> products2 = OrderHandler.getInstance().findOne(id).getProductList();
         products.forEach(p -> {
             p.setQuantity(0);
             products2.add(p);
@@ -47,17 +47,17 @@ public class OrdersService implements ServiceInterface<OrderGet> {
 
     @Override
     public Response readAll() {
-            return Response.ok(new OrderHandler().findAll(), MediaType.APPLICATION_JSON).build();
+            return Response.ok(OrderHandler.getInstance().findAll(), MediaType.APPLICATION_JSON).build();
     }
 
     @Override
     public Response update(OrderGet order) {
-        return  Response.ok(new OrderHandler().updateOrder(order), MediaType.APPLICATION_JSON).build();
+        return  Response.ok(OrderHandler.getInstance().updateOrder(order), MediaType.APPLICATION_JSON).build();
     }
 
     @Override
     public Response delete(int id) {
-        boolean response = new OrderHandler().delete(id);
+        boolean response = OrderHandler.getInstance().delete(id);
         if (response){
             return  Response.ok(true, MediaType.APPLICATION_JSON).build();
         } else

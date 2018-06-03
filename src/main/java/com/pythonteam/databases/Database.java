@@ -20,7 +20,7 @@ public class Database {
         config.setJdbcUrl("jdbc:postgresql://127.0.0.1/ventas");
         config.setUsername("ventas");
         config.setPassword("123");
-        config.setMaximumPoolSize(1);
+        config.setMaximumPoolSize(4);
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");

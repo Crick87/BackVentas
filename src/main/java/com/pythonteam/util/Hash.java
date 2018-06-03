@@ -19,10 +19,9 @@ public class Hash {
             md = MessageDigest.getInstance("MD5");
             byte[] bytes = md.digest(cadena.getBytes());
             StringBuilder strCryptMD5 = new StringBuilder(2 * bytes.length);
-            for (int i = 0; i < bytes.length; i++)
-            {
-                int low = (int)(bytes[i] & 0x0f);
-                int high = (int)((bytes[i] & 0xf0) >> 4);
+            for (byte aByte : bytes) {
+                int low = aByte & 0x0f;
+                int high = (aByte & 0xf0) >> 4;
                 strCryptMD5.append(HEXADECIMALES[high]);
                 strCryptMD5.append(HEXADECIMALES[low]);
             }

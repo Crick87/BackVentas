@@ -11,6 +11,14 @@ import java.util.concurrent.TimeUnit;
 
 public class TokenHandler implements BaseHandler<User,String>{
 
+    private static class SingletonHelper{
+        private static final TokenHandler INSTANCE = new TokenHandler();
+    }
+
+    public static TokenHandler getInstance(){
+        return SingletonHelper.INSTANCE;
+    }
+
     private static final long ttl = TimeUnit.DAYS.toMillis(120);
     @Override
     public List<User> findAll() {

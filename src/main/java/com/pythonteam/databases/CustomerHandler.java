@@ -7,6 +7,15 @@ import org.postgresql.geometric.PGpoint;
 import java.util.List;
 
 public class CustomerHandler implements BaseHandler<Customer,Integer> {
+
+    private static class SingletonHelper{
+        private static final CustomerHandler INSTANCE = new CustomerHandler();
+    }
+
+    public static CustomerHandler getInstance(){
+        return SingletonHelper.INSTANCE;
+    }
+
     @Override
     public List<Customer> findAll() {
         return Database.getJdbi().withExtension(CustomerDao.class, CustomerDao::list);

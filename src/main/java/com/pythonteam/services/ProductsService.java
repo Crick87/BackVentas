@@ -13,7 +13,7 @@ public class ProductsService implements ServiceInterface<Product> {
 
     @Override
     public Response create(Product product) {
-        Product response = new ProductHandler().create(product);
+        Product response = ProductHandler.getInstance().create(product);
         if (response != null)
             return  Response.ok(true, MediaType.APPLICATION_JSON).build();
         else
@@ -23,7 +23,7 @@ public class ProductsService implements ServiceInterface<Product> {
 
     @Override
     public Response read(int id) {
-        Product product = new ProductHandler().findOne(id);
+        Product product = ProductHandler.getInstance().findOne(id);
         if (product == null)
             return Response.status(Response.Status.NOT_FOUND).build();
         else
@@ -32,18 +32,18 @@ public class ProductsService implements ServiceInterface<Product> {
 
     @Override
     public Response readAll() {
-        List<Product> products = new ProductHandler().findAll();
+        List<Product> products = ProductHandler.getInstance().findAll();
         return Response.ok(products, MediaType.APPLICATION_JSON).build();
     }
 
     @Override
     public Response update(Product product) {
-        return  Response.ok(new ProductHandler().update(product), MediaType.APPLICATION_JSON).build();
+        return  Response.ok(ProductHandler.getInstance().update(product), MediaType.APPLICATION_JSON).build();
     }
 
     @Override
     public Response delete(int id) {
-        boolean response = new ProductHandler().delete(id);
+        boolean response = ProductHandler.getInstance().delete(id);
         if (response){
             return  Response.ok(true, MediaType.APPLICATION_JSON).build();
         } else

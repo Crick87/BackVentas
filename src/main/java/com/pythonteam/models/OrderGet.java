@@ -73,4 +73,12 @@ public class OrderGet {
     public void setStatus(boolean status) {
         this.status = status;
     }
+
+    public LocalDate getCompleteddate() {
+        return completeddate;
+    }
+
+    public void setCompleteddate(LocalDate completeddate) {
+        this.completeddate = completeddate;
+    }
 }

@@ -20,7 +20,7 @@ public class TokensService implements ServiceInterface<User> {
             return Response.serverError().entity("User no puede ir vacio").build();
         }
         try {
-            return  Response.ok(new TokenHandler().create(user), MediaType.APPLICATION_JSON).build();
+            return  Response.ok(TokenHandler.getInstance().create(user), MediaType.APPLICATION_JSON).build();
         } catch (SQLException e) {
             return Response.serverError().entity("Datos incorrectos").build();
         }
@@ -33,7 +33,7 @@ public class TokensService implements ServiceInterface<User> {
 
     @Override
     public Response readAll() {
-        return  Response.ok(new TokenHandler().findAll(), MediaType.APPLICATION_JSON).build();
+        return  Response.ok(TokenHandler.getInstance().findAll(), MediaType.APPLICATION_JSON).build();
     }
 
     @Override
@@ -51,7 +51,7 @@ public class TokensService implements ServiceInterface<User> {
     @Path("/token")
     public Response delete(User user)
     {
-        boolean response = new TokenHandler().delete(user.getId(), user.getToken());
+        boolean response = TokenHandler.getInstance().delete(user.getId(), user.getToken());
         if (!response)
             return Response.status(Response.Status.NOT_FOUND).build();
         else
