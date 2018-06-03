@@ -11,9 +11,9 @@ public class Hash {
     public Hash(){
         md = null;
     }
-    public String encriptar (String usuario, String password)
+    public String encriptar (String usuario)
     {
-        String cadena = usuario+":"+password+":"+Calendar.getInstance().getTime();
+        String cadena = usuario+":"+Calendar.getInstance().getTime();
         try
         {
             md = MessageDigest.getInstance("MD5");

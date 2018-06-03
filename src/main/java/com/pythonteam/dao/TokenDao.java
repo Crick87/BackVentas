@@ -25,4 +25,7 @@ public interface TokenDao {
     @SqlUpdate("delete from tokens where userid = :id and token = :token")
     boolean delete(@Bind("id") int id, @Bind("token") String token);
 
+    @SqlQuery("select userid from tokens where token = :token")
+    @RegisterBeanMapper(Token.class)
+    Token findByToken(@Bind("token") String token);
 }

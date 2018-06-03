@@ -45,9 +45,6 @@ dependencies {
     compile 'org.jdbi:jdbi3-sqlobject:3.1.1'
     compile 'org.jdbi:jdbi3-postgres:3.1.1'
 
-    //JWT
-    compile 'com.auth0:java-jwt:3.3.0'
-
-
+    compile 'com.google.inject:guice:4.2.0'
 
 }

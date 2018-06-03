@@ -1,8 +1,10 @@
 package com.pythonteam.databases;
 
+import com.pythonteam.dao.TokenDao;
 import com.pythonteam.dao.UserDao;
 import com.pythonteam.models.Customer;
 import com.pythonteam.models.Route;
+import com.pythonteam.models.Token;
 import com.pythonteam.models.User;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -68,5 +70,9 @@ public class UserHandler implements BaseHandler<User,Integer> {
     public Route updateRoute(Route route) {
         Database.getJdbi().withExtension(UserDao.class, dao-> dao.updateRoute(route.getIdRoute(),route.getIdCustomer(),route.getIdEmployee()) );
         return route;
+    }
+
+    public Token findByToken(String username) {
+        return Database.getJdbi().withExtension(TokenDao.class, dao->dao.findByToken(username));
     }
 }
