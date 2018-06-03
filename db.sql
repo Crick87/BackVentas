@@ -105,6 +105,7 @@ create table orders(
   customerId int references customers(id),
   status boolean default false,
   orderDate date,
+  completedDate date,
   employeeId int references users(id)
 );
 

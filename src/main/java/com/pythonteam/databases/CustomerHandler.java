@@ -2,6 +2,7 @@ package com.pythonteam.databases;
 
 import com.pythonteam.dao.CustomerDao;
 import com.pythonteam.models.Customer;
+import org.postgresql.geometric.PGpoint;
 
 import java.util.List;
 
@@ -32,6 +33,10 @@ public class CustomerHandler implements BaseHandler<Customer,Integer> {
 
     @Override
     public Customer create(Customer customer) {
+        if (customer.getLatlong() == null)
+        {
+            customer.setLatlong(new PGpoint(20.541397,-100.816643));
+        }
         customer.setId(Database.getJdbi().withExtension(CustomerDao.class, dao -> dao.create(customer.getName(), customer.getPhone(), customer.getEmail(),customer.getLatlong().x,customer.getLatlong().y)));
         //Database.getJdbi().withExtension(CustomerDao.class, dao -> dao.createRoute(1,customer.getId(),));
         return customer;

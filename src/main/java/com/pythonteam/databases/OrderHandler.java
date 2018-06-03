@@ -16,14 +16,14 @@ import static java.util.stream.Collectors.toList;
 
 public class OrderHandler implements BaseHandler<OrderGet,Integer> {
 
-    String selectAll = "select orderid o_orderid, customerId o_customerid, status o_status, orderdate o_orderdate,employeeId o_employeeId,quantity p_quantity, p.id p_id, p.name p_name, p.description p_description, price p_price, stock p_stock from orders o" +
+    String selectAll = "select orderid o_orderid, customerId o_customerid, status o_status, orderdate o_orderdate, completeddate o_completeddate,employeeId o_employeeId,quantity p_quantity, p.id p_id, p.name p_name, p.description p_description, price p_price, stock p_stock from orders o" +
             "                   join customer_order on o.id = customer_order.orderId" +
             "                   join products p on customer_order.productId = p.id" +
             "                   join productPrices on p.id=productPrices.productId" +
             "                   where date = (SELECT" +
             "                   MAX(date)" +
             "                   from productPrices" +
-            "                   where p.id = productPrices.productId and date <= now())";
+            "                   where p.id = productPrices.productId and date <= now() order by id)";
 
     String selectOne = selectAll + " and orderid = :id";
 

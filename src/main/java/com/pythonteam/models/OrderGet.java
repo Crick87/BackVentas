@@ -15,6 +15,11 @@ public class OrderGet {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate orderdate;
 
+    @ColumnName("completeddate")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate completeddate;
+
+
     public LocalDate getOrderdate() {
         return orderdate;
     }
