@@ -1,7 +1,7 @@
 package com.pythonteam.services;
 
 
-import com.pythonteam.databases.FireHandler;
+import com.pythonteam.handlers.FireHandler;
 import com.pythonteam.models.Token;
 
 import javax.ws.rs.POST;

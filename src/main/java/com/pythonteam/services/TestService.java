@@ -1,7 +1,7 @@
 package com.pythonteam.services;
 
 
-import com.pythonteam.databases.TokenHandler;
+import com.pythonteam.handlers.TokenHandler;
 import com.pythonteam.models.User;
 
 import javax.ws.rs.POST;

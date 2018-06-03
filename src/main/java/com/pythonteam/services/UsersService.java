@@ -1,6 +1,6 @@
 package com.pythonteam.services;
 
-import com.pythonteam.databases.UserHandler;
+import com.pythonteam.handlers.UserHandler;
 import com.pythonteam.filters.TokenSecured;
 import com.pythonteam.models.Customer;
 import com.pythonteam.models.Route;

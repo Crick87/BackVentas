@@ -1,6 +1,6 @@
 package com.pythonteam.services;
 
-import com.pythonteam.databases.CustomerHandler;
+import com.pythonteam.handlers.CustomerHandler;
 import com.pythonteam.models.Customer;
 
 import javax.ws.rs.Path;
