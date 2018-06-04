@@ -32,7 +32,7 @@ public class OrderHandler implements BaseHandler<OrderGet,Integer> {
             "                   where date = (SELECT" +
             "                   MAX(date)" +
             "                   from productPrices" +
-            "                   where p.id = productPrices.productId and date <= now())";
+            "                   where p.id = productPrices.productId and date <= o.orderdate)";
 
     String selectOne = selectAll + " and orderid = :id";
 

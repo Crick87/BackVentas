@@ -162,7 +162,7 @@ select orderid o_orderid, customerId o_customerid, status o_status, orderdate o_
                      join productPrices on p.id=productPrices.productId
                      where date = (SELECT MAX(date)
                         from productPrices
-                         where p.id = productPrices.productId and date <= now()) and orderid = 1;
+                         where p.id = productPrices.productId and date <= now()) and orderid = 10;
 
 
 select productId, name, stock, quantity from products right outer join customer_order o on products.id = o.productId where orderId = 1;
