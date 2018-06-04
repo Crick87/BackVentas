@@ -186,3 +186,60 @@ create table firetoken(
   token text
 );
 
+CREATE OR REPLACE FUNCTION updateAvaliable()
+RETURNS trigger AS
+  $BODY$
+    BEGIN
+      UPDATE products SET available = available - NEW.quantity
+      WHERE products.id = New.productid;
+      return NEW;
+    END;
+  $BODY$
+LANGUAGE plpgsql;
+
+drop trigger  updateAvaliable on customer_order;
+CREATE TRIGGER updateAvaliable
+  AFTER INSERT
+  ON customer_order
+  FOR EACH ROW
+  EXECUTE PROCEDURE updateAvaliable();
+
+
+CREATE OR REPLACE FUNCTION restockAvaliable()
+  RETURNS trigger AS
+    $BODY$
+    BEGIN
+      UPDATE products SET available = available + OLD.quantity
+      WHERE products.id = OLD.productid;
+      return NEW;
+    END;
+$BODY$ LANGUAGE plpgsql;
+
+drop trigger  restockAvaliable on customer_order;
+CREATE TRIGGER restockAvaliable
+  AFTER delete
+  ON customer_order
+  FOR EACH ROW
+  EXECUTE PROCEDURE restockAvaliable();
+
+CREATE OR REPLACE FUNCTION updateAvaliable2()
+RETURNS trigger AS
+$BODY$
+BEGIN
+IF NEW.quantity > OLD.quantity then
+UPDATE products SET available = available + (NEW.quantity - OLD.quantity)
+WHERE products.id = OLD.productid;
+END IF;
+IF NEW.quantity < OLD.quantity then
+UPDATE products SET available = available + (OLD.quantity - NEW.quantity )
+WHERE products.id = OLD.productid;
+END IF;
+return NEW;
+END;
+$BODY$ LANGUAGE plpgsql;
+drop trigger  updateAvaliable2 on customer_order;
+CREATE TRIGGER updateAvaliable2
+  AFTER update
+  ON customer_order
+  FOR EACH ROW
+  EXECUTE PROCEDURE updateAvaliable2();

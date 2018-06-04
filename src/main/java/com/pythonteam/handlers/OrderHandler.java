@@ -8,6 +8,7 @@ import com.pythonteam.models.OrderGet;
 import com.pythonteam.models.Product;
 import org.jdbi.v3.core.mapper.reflect.BeanMapper;
 
+import javax.xml.crypto.Data;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -101,6 +102,7 @@ public class OrderHandler implements BaseHandler<OrderGet,Integer> {
         Database.getJdbi().withExtension(OrderDao.class, dao -> dao.updateStatus(order.getOrderId(),order.isStatus(),order.getCustomerId()));
         if (order.isStatus())
         {
+            Database.getJdbi().withExtension(OrderDao.class, dao-> dao.complete(order.getOrderId()));
             for (Product product: order.getProductList()) {
                 Product ori = Database.getJdbi().withExtension(ProductDao.class, dao -> dao.findOne(product.getId()));
                 int change = 0;
@@ -126,12 +128,20 @@ public class OrderHandler implements BaseHandler<OrderGet,Integer> {
 
 
 
-    public OrderGet createOrder(OrderGet order) {
+    public OrderGet createOrder(OrderGet order)
+    {
         order.setOrderId(Database.getJdbi().withExtension(OrderDao.class, dao -> dao.create(order.getCustomerId(),order.getEmployeeId())));
-        for (Product p :
-                order.getProductList()) {
+        for (Product p : order.getProductList())
+        {
             if (p.getQuantity()>0)
-            Database.getJdbi().withExtension(OrderDao.class, dao -> dao.addProduct(order.getOrderId(),p.getId(),p.getQuantity()));
+            {
+                Product product = Database.getJdbi().withExtension(ProductDao.class, dao -> dao.findOne(p.getId()));
+                if (p.getQuantity() > product.getAvailable() )
+                {
+                    return null;
+                }
+                Database.getJdbi().withExtension(OrderDao.class, dao -> dao.addProduct(order.getOrderId(),p.getId(),p.getQuantity()));
+            }
         }
         return findOne(order.getOrderId());
     }

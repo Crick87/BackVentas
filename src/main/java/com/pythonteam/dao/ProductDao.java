@@ -43,6 +43,6 @@ public interface ProductDao {
     @RegisterBeanMapper(Product.class)
     Product update(@Bind("id") int id, @Bind("name") String name, @Bind("description") String description, @Bind("stock") int stock, @Bind("available") int available);
 
-    @SqlUpdate("update products set available = :stock where id = :id")
+    @SqlUpdate("update products set stock = :stock where id = :id")
     int updateStock(@Bind("id") int id,@Bind("stock") int stock);
 }

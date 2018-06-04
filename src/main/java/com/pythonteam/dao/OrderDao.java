@@ -46,4 +46,7 @@ public interface OrderDao {
             "            from customer_order where orderId = :orderid)) order by id;")
     @RegisterBeanMapper(Product.class)
     ArrayList<Product> getProducts(@Bind("orderid") int orderid);
+
+    @SqlUpdate("update orders set completeddate = now() where id = :id")
+    boolean complete(@Bind("id") int id);
 }

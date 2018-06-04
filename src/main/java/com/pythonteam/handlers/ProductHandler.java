@@ -41,8 +41,16 @@ public class ProductHandler implements BaseHandler<Product,Integer> {
                 dao.createPrice(product.getId(),product.getPrice());
             else if(p.getStock() != product.getStock())
             {
-                int diff = product.getStock() - p.getStock();
-                return dao.update(product.getId(),product.getName(), product.getDescription(), product.getStock(),p.getAvailable()+diff);
+                if (p.getStock() > product.getStock())
+                {
+                    int diff = p.getStock() - product.getStock();
+                    return dao.update(product.getId(),product.getName(), product.getDescription(), p.getStock(),p.getAvailable()-diff);
+                }
+                else if(p.getStock() < product.getStock())
+                {
+                    int diff = product.getStock() - p.getStock();
+                    return dao.update(product.getId(),product.getName(), product.getDescription(), product.getStock(),p.getAvailable()+diff);
+                }
             }
             return dao.update(product.getId(),product.getName(), product.getDescription(), product.getStock(), product.getAvailable());
         });
