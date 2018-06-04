@@ -25,6 +25,9 @@ public interface OrderDao {
     @SqlUpdate("delete from customer_order where orderId = :id")
     boolean deleteOrder(@Bind("id") int id);
 
+    @SqlUpdate("delete from customer_order where productid = :id")
+    boolean deleteAllProducts(@Bind("id") int id);
+
     @SqlUpdate("delete from customer_order where orderId = :id")
     boolean deleteProducts(@Bind("id") int id);
 

@@ -1,5 +1,6 @@
 package com.pythonteam.handlers;
 
+import com.pythonteam.dao.OrderDao;
 import com.pythonteam.dao.ProductDao;
 import com.pythonteam.database.Database;
 import com.pythonteam.models.Product;
@@ -27,6 +28,7 @@ public class ProductHandler implements BaseHandler<Product,Integer> {
 
     @Override
     public boolean delete(Integer id) {
+        Database.getJdbi().withExtension(OrderDao.class, dao -> dao.deleteAllProducts(id));
         return Database.getJdbi().withExtension(ProductDao.class,dao -> {
             dao.deletePrice(id);
             return dao.delete(id);

@@ -7,8 +7,6 @@ import com.pythonteam.database.Database;
 import com.pythonteam.models.OrderGet;
 import com.pythonteam.models.Product;
 import org.jdbi.v3.core.mapper.reflect.BeanMapper;
-
-import javax.xml.crypto.Data;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +31,7 @@ public class OrderHandler implements BaseHandler<OrderGet,Integer> {
             "                   where date = (SELECT" +
             "                   MAX(date)" +
             "                   from productPrices" +
-            "                   where p.id = productPrices.productId and date <= o.orderdate)";
+            "                   where p.id = productPrices.productId and date <= now())";
 
     String selectOne = selectAll + " and orderid = :id";
 
@@ -47,7 +45,6 @@ public class OrderHandler implements BaseHandler<OrderGet,Integer> {
                        OrderGet order  = map.computeIfAbsent(
                                rowView.getColumn("o_orderid", Integer.class),
                                id -> rowView.getRow(OrderGet.class));
-
                        if (rowView.getColumn("p_id", Integer.class) != null) {
                            order.addProduct(rowView.getRow(Product.class));
                        }
